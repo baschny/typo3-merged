@@ -1,0 +1,60 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: white;
+	padding: 0;
+	margin: 0;
+	font-size: 13px;
+}
+
+table {
+	font-size: 100%;
+}
+
+a {
+	color: #BE0027;
+}
+
+a:visited {
+	color: #DB7388;
+}
+
+a:hover {
+	color: #FF8700;
+}
+
+h1 {
+	font-size: 20px;
+	font-family: Share-Bold;
+	padding-top: 50px;
+	background: url('logo-typo3.gif') top left no-repeat;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td, th {
+	text-align: left;
+	padding: 2px;
+}
+
+th.release {
+	text-align: center;
+}
+
+th {
+	color: #FFF;
+	background-color: #FF9F33;
+	border: 1px solid #FF8700;
+}
+
+td.info-planned {
+	text-align: center;
+}
+
+tr {
+	border: 1px solid #F8F8F8;
+}
+tr:hover {
+	background-color: #FFFFDD;
+}
