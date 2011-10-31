@@ -43,8 +43,8 @@ $releasesToCheck = array(
 #	array('4.3', 'TYPO3_4-3-0', 'TYPO3_4-3', '/www/shared/TYPO3core/TYPO3_4-3/'),
 	array('4.4', 'TYPO3_4-4-0', 'TYPO3_4-4', '/www/shared/TYPO3core/TYPO3_4-4/'),
 	array('4.5', 'TYPO3_4-5-0', 'TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5/'),
-	array('4.6', 'TYPO3_4-6-0', 'TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6/'),
-	array('4.7', 'TYPO3_4-6-0', 'master', '/www/shared/TYPO3core/TYPO3_4-6/'),
+	array('4.6', 'TYPO3_4-5-0', 'TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6/'),
+	array('4.7', 'TYPO3_4-5-0', 'master', '/www/shared/TYPO3core/TYPO3_4-7/'),
 );
 $gitRoot = '/www/shared/TYPO3core/';
 $htmlFile = '/home/ernst/TYPO3-Release/index.html';
@@ -61,7 +61,7 @@ $htmlFile = '/home/ernst/TYPO3-Release/index.html';
 
 // %s = 4-5-0 (first release)
 // %s = 4-5 (current state)
-$cmdGitLog = 'git log refs/tags/%s..origin/%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=short';
+$cmdGitLog = 'git log refs/tags/%s..origin/%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
 // Fetch per-release information
 
@@ -151,6 +151,14 @@ foreach ($commits as $branch => $commitInfos) {
 			continue;
 		}
 		foreach ($commit['issues'] as $issue) {
+			$thisDate = strtotime($commit['date']);
+			if (isset($issueInfo[$issue]) && $issueInfo[$issue]['lastUpdate']) {
+				if ($thisDate > $issueInfo[$issue]['lastUpdate'])  {
+					$issueInfo[$issue]['lastUpdate'] = $thisDate;
+				}
+			} else {
+				$issueInfo[$issue]['lastUpdate'] = $thisDate;
+			}
 			$issueInfo[$issue]['solved'][$branch] = array(
 				'date' => $commit['date'],
 				'hash' => $commit['hash'],
@@ -167,25 +175,15 @@ foreach ($commits as $branch => $commitInfos) {
 }
 
 // Sort the list
-
-function normalizeIssue($a) {
-	if (preg_match('/^#(M)?(\d+)/', $a, $matches)) {
-		$b = intval($matches[2]);
-		if ($matches[1] == 'M') {
-			$b = $b - 20000;
-		}
-	}
-	return $b;
-}
 function compareIssues($a, $b) {
+	$dateA = $a['lastUpdate'];
+	$dateB = $b['lastUpdate'];
 	if ($a == $b) {
 		return 0;
 	}
-	$a = normalizeIssue($a);
-	$b = normalizeIssue($b);
-	return ((int)$a > (int)$b) ? -1 : 1;
+	return ($a > $b) ? -1 : 1;
 }
-uksort($issueInfo, 'compareIssues');
+uasort($issueInfo, 'compareIssues');
 
 // Print out the overview
 
@@ -223,11 +221,22 @@ foreach ($issueInfo as $issueNumber => $issueData) {
 		if (isset($issueData['solved'][$releaseBranch])) {
 			$subject = $issueData['solved'][$releaseBranch]['subject'];
 			$class = 'info-solved';
+			if ($issueData['solved'][$releaseBranch]['inRelease'] == 'next') {
+				$versionName = 'for next release';
+				$versionTag = 'next';
+			} else if (preg_match('/^' . $releaseName . '/', $issueData['solved'][$releaseBranch]['inRelease'])) {
+				$versionName = 'for ' . $issueData['solved'][$releaseBranch]['inRelease'];
+				$versionTag = $issueData['solved'][$releaseBranch]['inRelease'];
+			} else {
+				$versionName = sprintf('in previous release (%s)', $issueData['solved'][$releaseBranch]['inRelease']);
+				$versionTag = 'previous';
+			}
+			$releaseName = $issueData['solved'][$releaseBranch]['inRelease'];
 			$text = sprintf('<a title="Merged on %s for %s" target="_blank" href="http://git.typo3.org/TYPO3v4/Core.git?a=commit;h=%s" target="_blank">%s</a>',
 				$issueData['solved'][$releaseBranch]['date'],
-				( $issueData['solved'][$releaseBranch]['inRelease'] == 'next' ? 'next release' : $issueData['solved'][$releaseBranch]['inRelease'] ),
+				$versionName,
 				$issueData['solved'][$releaseBranch]['hash'],
-				$issueData['solved'][$releaseBranch]['inRelease']
+				$versionTag
 			);
 		} elseif (isset($issueData['planned']) && isset($issueData['planned'][$releaseName])) {
 			$class = 'info-planned';
