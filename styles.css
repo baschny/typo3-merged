@@ -40,6 +40,7 @@ td, th {
 
 th.release {
 	text-align: center;
+	width: 5em;
 }
 
 th {
@@ -49,7 +50,6 @@ th {
 }
 
 td.info-planned {
-	text-align: center;
 }
 
 tr {
