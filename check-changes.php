@@ -240,7 +240,7 @@ foreach ($issueInfo as $issueNumber => $issueData) {
 				$versionTag = 'previous';
 			}
 			$releaseName = $issueData['solved'][$releaseBranch]['inRelease'];
-			$text = sprintf('<a title="Merged on %s for %s" target="_blank" href="http://git.typo3.org/TYPO3v4/Core.git?a=commit;h=%s" target="_blank">%s</a>',
+			$text = sprintf('<a title="Merged on %s %s" target="_blank" href="http://git.typo3.org/TYPO3v4/Core.git?a=commit;h=%s" target="_blank">%s</a>',
 				$issueData['solved'][$releaseBranch]['date'],
 				$versionName,
 				$issueData['solved'][$releaseBranch]['hash'],
