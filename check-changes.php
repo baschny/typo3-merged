@@ -49,6 +49,10 @@ $releasesToCheck = array(
 $gitRoot = '/www/shared/TYPO3core/';
 $htmlFile = '/home/ernst/TYPO3-Release/index.html';
 
+$issueMapping = array(
+	'#M17868' => '#25258',
+);
+
 #$releasesToCheck = array(
 #	array('1.0', '1.0.0', 'extbase_1-0'),
 #	array('1.1', '1.1.0', 'extbase_1-1'),
@@ -93,6 +97,10 @@ foreach ($releasesToCheck as $releaseRange) {
 					case 'Fixes':
 						$issues = explode(',', $bodyInfo[1]);
 						foreach ($issues as $issue) {
+							$issue = trim($issue);
+							if (isset($issueMapping[$issue])) {
+								$issue = $issueMapping[$issue];
+							}
 							$commitInfos['issues'][] = trim($issue);
 						}
 						break;
