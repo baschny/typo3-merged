@@ -44,7 +44,8 @@ $releasesToCheck = array(
 	array('4.4', 'TYPO3_4-4-0', 'TYPO3_4-4', '/www/shared/TYPO3core/TYPO3_4-4/'),
 	array('4.5', 'TYPO3_4-5-0', 'TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5/'),
 	array('4.6', 'TYPO3_4-5-0', 'TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6/'),
-	array('4.7', 'TYPO3_4-5-0', 'master', '/www/shared/TYPO3core/TYPO3_4-7/'),
+	array('4.7', 'TYPO3_4-5-0', 'TYPO3_4-7', '/www/shared/TYPO3core/TYPO3_4-7/'),
+	array('4.8', 'TYPO3_4-5-0', 'master', '/www/shared/TYPO3core/TYPO3_4-8/'),
 );
 $gitRoot = '/www/shared/TYPO3core/';
 $htmlFile = '/home/ernst/TYPO3-Release/index.html';
