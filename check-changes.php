@@ -44,9 +44,9 @@ $releasesToCheck = array(
 #	array('4.3', 'TYPO3_4-3-0', 'origin/TYPO3_4-3', '/www/shared/TYPO3core/TYPO3_4-3/'),
 	array('4.4', 'TYPO3_4-4-0', 'origin/TYPO3_4-4', '/www/shared/TYPO3core/TYPO3_4-4/'),
 	array('4.5', 'TYPO3_4-5-0', 'origin/TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5/'),
-	array('4.5-BP', 'TYPO3_4-5-0', 'backports/TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5_backports/'),
+#	array('4.5-BP', 'TYPO3_4-5-0', 'backports/TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5_backports/'),
 	array('4.6', 'TYPO3_4-5-0', 'origin/TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6/'),
-	array('4.6-BP', 'TYPO3_4-5-0', 'backports/TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6_backports/'),
+#	array('4.6-BP', 'TYPO3_4-5-0', 'backports/TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6_backports/'),
 	array('4.7', 'TYPO3_4-5-0', 'origin/TYPO3_4-7', '/www/shared/TYPO3core/TYPO3_4-7/'),
 	array('6.0', 'TYPO3_4-5-0', 'origin/master', '/www/shared/TYPO3core/TYPO3_6-0/'),
 );
