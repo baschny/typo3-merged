@@ -53,6 +53,8 @@ $releasesToCheck = array(
 $gitRoot = '/www/shared/TYPO3core/';
 $htmlFile = '/home/ernst/TYPO3-Release/index.html';
 
+$reviewLinkPattern = "https://review.typo3.org/#/q/project:TYPO3v4/Core+topic:%s,n,z";
+
 $issueMapping = array(
 	'#M17868' => '#25258',
 	'#M17924' => '#25305',
@@ -209,14 +211,17 @@ foreach ($releasesToCheck as $release) {
 	$releaseName = $release[0];
 	$out .= sprintf('<th class="release">%s</th>', $releaseName);
 }
+$out .= '<th class="review">Reviews</th>';
 $out .= '<th class="desc">Description</th>';
 $out .= "</tr>";
 
 foreach ($issueInfo as $issueNumber => $issueData) {
 	$out .= "<tr>";
 	$issueLink = '';
+	$reviewLink = '';
 	if (preg_match('/^#(\d+)/', $issueNumber, $match)) {
 		$issueLink = sprintf('http://forge.typo3.org/issues/%s', $match[1]);
+		$reviewLink = sprintf($reviewLinkPattern, $match[1]);
 	} elseif (preg_match('/^#M(\d+)/', $issueNumber, $match)) {
 		$issueLink = sprintf('http://bugs.typo3.org/view.php?id=%s', $match[1]);
 	}
@@ -281,6 +286,11 @@ foreach ($issueInfo as $issueNumber => $issueData) {
 		}
 		$out .= sprintf('<td class="%s">%s</td>', $class, $text);
 	}
+	$out .= '<td class="review">';
+	if ($reviewLink) {
+		$out .= sprintf('<a href="%s" target="_blank" title="Check review system for patches concearning this issue">Reviews</a>', $reviewLink);
+	}
+	$out .= '</td>';
 	$out .= sprintf('<td class="description">%s</td>', htmlspecialchars($subject));
 	$out .= "</tr>\n";
 }
