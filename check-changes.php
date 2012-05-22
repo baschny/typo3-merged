@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011 Ernesto Baschny (ernst@cron-it.de>
+*  (c) 2011-2012 Ernesto Baschny (ernst@cron-it.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -17,7 +17,6 @@
 *  A copy is found in the textfile GPL.txt and important notices to the license
 *  from the author is found in LICENSE.txt distributed with these scripts.
 *
-*
 *  This script is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,11 +28,9 @@
 /**
  * This scripts checks which commits were merged into TYPO3 core git
  * and merges the information per-release into one big table.
- *
  * Requires the "git" command line tool.
  *
  * @author Ernesto Baschny <ernst@cron-it.de>
- *
  */
 
 // Configuration
@@ -134,7 +131,7 @@ foreach ($releasesToCheck as $releaseRange) {
 			if (preg_match('/Release of TYPO3 (.*)/', $commitInfos['subject'], $matches)) {
 				$inRelease = $matches[1];
 			}
-			$commitInfos['inRelease'] = ( $inRelease ? $inRelease : 'next' );
+			$commitInfos['inRelease'] = ($inRelease ? $inRelease : 'next');
 			$commits[$branch][] = $commitInfos;
 			$commitInfos = array();
 			continue;
@@ -165,7 +162,7 @@ foreach ($commits as $branch => $commitInfos) {
 		foreach ($commit['issues'] as $issue) {
 			$thisDate = strtotime($commit['date']);
 			if (isset($issueInfo[$issue]) && $issueInfo[$issue]['lastUpdate']) {
-				if ($thisDate > $issueInfo[$issue]['lastUpdate'])  {
+				if ($thisDate > $issueInfo[$issue]['lastUpdate']) {
 					$issueInfo[$issue]['lastUpdate'] = $thisDate;
 				}
 			} else {
@@ -195,6 +192,7 @@ function compareIssues($a, $b) {
 	}
 	return ($a > $b) ? -1 : 1;
 }
+
 uasort($issueInfo, 'compareIssues');
 
 // Print out the overview
@@ -302,7 +300,7 @@ foreach ($lastHash as $release => $hash) {
 }
 $out .= '</ul>';
 
-$out .= sprintf('<p>Generated on %s by check-changes.php, maintained by <a href="mailto:ernst@cron-it.de">Ernesto Baschny</a>, <a href="http://www.typo3-anbieter.de" target="_blank">cron IT GmbH</a>.</p>', 
+$out .= sprintf('<p>Generated on %s by check-changes.php, maintained by <a href="mailto:ernst@cron-it.de">Ernesto Baschny</a>, <a href="http://www.typo3-anbieter.de" target="_blank">cron IT GmbH</a>.</p>',
 	strftime('%c', time())
 );
 
