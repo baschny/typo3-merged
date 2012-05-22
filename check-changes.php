@@ -38,14 +38,17 @@
 
 // Configuration
 
+// Release name, First tag, Branch name, Checkout
 $releasesToCheck = array(
-#	array('4.2', 'TYPO3_4-2-0', 'TYPO3_4-2', '/www/shared/TYPO3core/TYPO3_4-2/'),
-#	array('4.3', 'TYPO3_4-3-0', 'TYPO3_4-3', '/www/shared/TYPO3core/TYPO3_4-3/'),
-	array('4.4', 'TYPO3_4-4-0', 'TYPO3_4-4', '/www/shared/TYPO3core/TYPO3_4-4/'),
-	array('4.5', 'TYPO3_4-5-0', 'TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5/'),
-	array('4.6', 'TYPO3_4-5-0', 'TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6/'),
-	array('4.7', 'TYPO3_4-5-0', 'TYPO3_4-7', '/www/shared/TYPO3core/TYPO3_4-7/'),
-	array('4.8', 'TYPO3_4-5-0', 'master', '/www/shared/TYPO3core/TYPO3_4-8/'),
+#	array('4.2', 'TYPO3_4-2-0', 'origin/TYPO3_4-2', '/www/shared/TYPO3core/TYPO3_4-2/'),
+#	array('4.3', 'TYPO3_4-3-0', 'origin/TYPO3_4-3', '/www/shared/TYPO3core/TYPO3_4-3/'),
+	array('4.4', 'TYPO3_4-4-0', 'origin/TYPO3_4-4', '/www/shared/TYPO3core/TYPO3_4-4/'),
+	array('4.5', 'TYPO3_4-5-0', 'origin/TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5/'),
+	array('4.5-BP', 'TYPO3_4-5-0', 'backports/TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5_backports/'),
+	array('4.6', 'TYPO3_4-5-0', 'origin/TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6/'),
+	array('4.6-BP', 'TYPO3_4-5-0', 'backports/TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6_backports/'),
+	array('4.7', 'TYPO3_4-5-0', 'origin/TYPO3_4-7', '/www/shared/TYPO3core/TYPO3_4-7/'),
+	array('6.0', 'TYPO3_4-5-0', 'origin/master', '/www/shared/TYPO3core/TYPO3_6-0/'),
 );
 $gitRoot = '/www/shared/TYPO3core/';
 $htmlFile = '/home/ernst/TYPO3-Release/index.html';
@@ -61,19 +64,9 @@ $issueMapping = array(
 	'#23860' => '#23355',
 );
 
-#$releasesToCheck = array(
-#	array('1.0', '1.0.0', 'extbase_1-0'),
-#	array('1.1', '1.1.0', 'extbase_1-1'),
-#	array('1.2', '1.2.0', 'extbase_1-2'),
-##	array('1.3', '1.3.0', 'extbase_1-3'),
-#	array('1.4', '1.3.0', 'master'),
-#);
-#$gitRoot = '/www/shared/TYPO3ext/extbase';
-#$htmlFile = '/home/ernst/TYPO3-Release/extbase.html';
-
 // %s = 4-5-0 (first release)
 // %s = 4-5 (current state)
-$cmdGitLog = 'git log refs/tags/%s..origin/%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
+$cmdGitLog = 'git log refs/tags/%s..%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
 // Fetch per-release information
 
@@ -81,7 +74,6 @@ $commits = array();
 chdir($gitRoot);
 foreach ($releasesToCheck as $releaseRange) {
 	$branch = $releaseRange[2];
-	$tagPrefix = 'TYPO3_(' . str_replace('.', '-', $releaseRange[0]) . '.*)';
 	$dir = $releaseRange[3];
 	#echo "dir=$dir\n";
 	chdir($dir);
@@ -90,6 +82,8 @@ foreach ($releasesToCheck as $releaseRange) {
 
 	$lastHash[$branch] = '';
 	$gitLogCmd = sprintf($cmdGitLog, $releaseRange[1], $branch);
+	#echo $gitLogCmd . "\n";
+	#continue;
 	$output = '';
 	exec($gitLogCmd, $output);
 	$currentField = '';
@@ -230,33 +224,60 @@ foreach ($issueInfo as $issueNumber => $issueData) {
 	$out .= sprintf('<td>%s</td>', $issueNumber);
 	$subject = '';
 	foreach ($releasesToCheck as $release) {
-		$releaseName = $release[0];
+		$releaseName = str_replace('-BP', '', $release[0]);
 		$releaseBranch = $release[2];
 		$class = 'info-none';
 		$text = '';
 		if (isset($issueData['solved'][$releaseBranch])) {
 			$subject = $issueData['solved'][$releaseBranch]['subject'];
-			$class = 'info-solved';
-			if ($issueData['solved'][$releaseBranch]['inRelease'] == 'next') {
-				$versionName = 'for next release';
-				$versionTag = 'next';
-			} else if (preg_match('/^' . $releaseName . '/', $issueData['solved'][$releaseBranch]['inRelease'])) {
-				$versionName = 'for ' . $issueData['solved'][$releaseBranch]['inRelease'];
-				$versionTag = $issueData['solved'][$releaseBranch]['inRelease'];
-			} else {
-				$versionName = sprintf('in previous release (%s)', $issueData['solved'][$releaseBranch]['inRelease']);
-				$versionTag = 'previous';
+		}
+		if (preg_match('/^backports\/(.*)/', $releaseBranch, $matches)) {
+			// Specific output for backport branches
+			$originalBranch = 'origin/' . $matches[1];
+			if (isset($issueData['solved'][$releaseBranch]) && isset($issueData['solved'][$originalBranch])) {
+				// merged in original *and* backports branch already
+				$class = 'info-solved';
+				$text = sprintf('<span title="Merged in both origin and backports of %s">ok</span>', $matches[1]);
+			} else if (isset($issueData['solved'][$releaseBranch]) && !isset($issueData['solved'][$originalBranch])) {
+				// merged only in the backports branch: This is a backport!!!
+				$class = 'info-solved';
+				$text = sprintf('<a title="Merged only on backports of %s (%s)" target="_blank" href="http://git.typo3.org/TYPO3v4/Core.git?a=commit;h=%s" target="_blank">BACKPORT</a>',
+					$matches[1],
+					$issueData['solved'][$releaseBranch]['date'],
+					$issueData['solved'][$releaseBranch]['hash']
+				);
+			} elseif (isset($issueData['solved'][$originalBranch]) && !isset($issueData['solved'][$releaseBranch])) {
+				// merged only in the original branch: needs to cherry-pick still
+				$text = sprintf('<a title="Merged only on origin of %s (%s), needs cherry-pick" target="_blank" href="http://git.typo3.org/TYPO3v4/Core.git?a=commit;h=%s" target="_blank">TODO</a>',
+					$matches[1],
+					$issueData['solved'][$originalBranch]['date'],
+					$issueData['solved'][$originalBranch]['hash']
+				);
 			}
-			$releaseName = $issueData['solved'][$releaseBranch]['inRelease'];
-			$text = sprintf('<a title="Merged on %s %s" target="_blank" href="http://git.typo3.org/TYPO3v4/Core.git?a=commit;h=%s" target="_blank">%s</a>',
-				$issueData['solved'][$releaseBranch]['date'],
-				$versionName,
-				$issueData['solved'][$releaseBranch]['hash'],
-				$versionTag
-			);
-		} elseif (isset($issueData['planned']) && isset($issueData['planned'][$releaseName])) {
-			$class = 'info-planned';
-			$text = sprintf('<span title="Planned for %s, not merged yet">TODO</span>', $releaseName);
+		} else {
+			if (isset($issueData['solved'][$releaseBranch])) {
+				$class = 'info-solved';
+				if ($issueData['solved'][$releaseBranch]['inRelease'] == 'next') {
+					$versionName = 'for next release';
+					$versionTag = 'next';
+				} else if (preg_match('/^' . $releaseName . '/', $issueData['solved'][$releaseBranch]['inRelease'])) {
+					$versionName = 'for ' . $issueData['solved'][$releaseBranch]['inRelease'];
+					$versionTag = $issueData['solved'][$releaseBranch]['inRelease'];
+				} else {
+					$versionName = sprintf('in previous release (%s)', $issueData['solved'][$releaseBranch]['inRelease']);
+					$versionTag = 'previous';
+				}
+				$releaseName = $issueData['solved'][$releaseBranch]['inRelease'];
+				$text = sprintf('<a title="Merged on %s %s" target="_blank" href="http://git.typo3.org/TYPO3v4/Core.git?a=commit;h=%s" target="_blank">%s</a>',
+					$issueData['solved'][$releaseBranch]['date'],
+					$versionName,
+					$issueData['solved'][$releaseBranch]['hash'],
+					$versionTag
+				);
+			} elseif (isset($issueData['planned']) && isset($issueData['planned'][$releaseName])) {
+				$class = 'info-planned';
+				$text = sprintf('<span title="Planned for %s, not merged yet">TODO</span>', $releaseName);
+			}
 		}
 		$out .= sprintf('<td class="%s">%s</td>', $class, $text);
 	}
