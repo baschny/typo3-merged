@@ -1,8 +1,9 @@
 body {
+	background: url(logo-typo3.gif) right top no-repeat;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: white;
 	padding: 0;
-	margin: 0;
+	margin: 10px;
 	font-size: 13px;
 }
 
@@ -22,13 +23,15 @@ a:hover {
 	color: #FF8700;
 }
 
+h1, h2 {
+	font-family: Share-Bold;
+}
 h1 {
 	font-size: 20px;
-	font-family: Share-Bold;
-	padding-top: 50px;
-	background: url('logo-typo3.gif') top left no-repeat;
 }
-
+h2 {
+	font-size: 15px;
+}
 table {
 	border-collapse: collapse;
 }
@@ -36,25 +39,37 @@ table {
 td, th {
 	text-align: left;
 	padding: 2px;
+	border: 1px solid #ccc;
 }
 
 th.release {
 	text-align: center;
-	width: 5em;
+	min-width:10ex;
+}
+
+th.desc {
+	min-width:70em;
+}
+
+td.issue {
+	min-width:10ex;
 }
 
 th {
 	color: #FFF;
 	background-color: #FF9F33;
-	border: 1px solid #FF8700;
+	border-color: #FF8700;
 }
 
+td.info-planned, td.info-solved {
+	text-align: center;
+}
 td.info-planned {
+	font-weight:bold;
+	color: white;
+	background-color: red;
 }
 
-tr {
-	border: 1px solid #F8F8F8;
-}
 tr:hover {
 	background-color: #FFFFDD;
 }
