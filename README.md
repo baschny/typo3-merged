@@ -11,3 +11,4 @@ and which is still open.
 See it in action here:
 
 	http://www.typo3-anbieter.de/typo3-merges/
+	http://bit.ly/flow3-merged-changes
