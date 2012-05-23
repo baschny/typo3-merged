@@ -1,10 +1,10 @@
-#!/usr/bin/php -q
+#!/usr/bin/env php -q
 <?php
 /***************************************************************
 *  Copyright notice
 *
 *  (c) 2011-2012 Ernesto Baschny (ernst@cron-it.de>
-*  All rights reserved
+*  (c) 2011-2012 Karsten Dambekalns <karsten@typo3.org>
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
 *  free software; you can redistribute it and/or modify
@@ -14,8 +14,6 @@
 *
 *  The GNU General Public License can be found at
 *  http://www.gnu.org/copyleft/gpl.html.
-*  A copy is found in the textfile GPL.txt and important notices to the license
-*  from the author is found in LICENSE.txt distributed with these scripts.
 *
 *  This script is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -26,11 +24,10 @@
 ***************************************************************/
 
 /**
- * This scripts checks which commits were merged into TYPO3 core git
+ * This scripts checks which commits were merged into git
  * and merges the information per-release into one big table.
- * Requires the "git" command line tool.
  *
- * @author Ernesto Baschny <ernst@cron-it.de>
+ * Requires the "git" command line tool.
  */
 
 // Configuration
@@ -67,7 +64,38 @@ $issueMapping = array(
 // %s = 4-5 (current state)
 $cmdGitLog = 'git log refs/tags/%s..%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
-// Fetch per-release information
+/**
+ * Takes an issue number and returns the plain integer
+ * value, corrected for the offset needed on mantis issues.
+ *
+ * @param string $a
+ * @return integer
+ */
+function normalizeIssue($a) {
+	if (preg_match('/^#(M)?(\d+)/', $a, $matches)) {
+		$b = intval($matches[2]);
+		if ($matches[1] == 'M') {
+			$b = $b - 20000;
+		}
+		return $b;
+	}
+}
+
+/**
+ * Compare two issue numbers in string format, e.g. #123 and #M567.
+ *
+ * @param string $a
+ * @param string $b
+ * @return integer
+ */
+function compareIssues($a, $b) {
+	if ($a === $b) {
+		return 0;
+	}
+	$a = normalizeIssue($a);
+	$b = normalizeIssue($b);
+	return ($a > $b) ? -1 : 1;
+}
 
 $commits = array();
 chdir($gitRoot);
@@ -183,15 +211,6 @@ foreach ($commits as $branch => $commitInfos) {
 	}
 }
 
-// Sort the list
-function compareIssues($a, $b) {
-	$dateA = $a['lastUpdate'];
-	$dateB = $b['lastUpdate'];
-	if ($a == $b) {
-		return 0;
-	}
-	return ($a > $b) ? -1 : 1;
-}
 
 uasort($issueInfo, 'compareIssues');
 
@@ -300,10 +319,9 @@ foreach ($lastHash as $release => $hash) {
 }
 $out .= '</ul>';
 
-$out .= sprintf('<p>Generated on %s by check-changes.php, maintained by <a href="mailto:ernst@cron-it.de">Ernesto Baschny</a>, <a href="http://www.typo3-anbieter.de" target="_blank">cron IT GmbH</a>.</p>',
-	strftime('%c', time())
-);
 
+date_default_timezone_set('Europe/Berlin');
+$out .= sprintf('<p>Generated on %s. Based on check-changes.php by <a href="mailto:ernst@cron-it.de">Ernesto Baschny</a>.</p>', strftime('%c', time()));
 $out .= "</body></html>";
 
 $fh = fopen($htmlFile, 'w');
