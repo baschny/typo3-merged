@@ -145,7 +145,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 					// Remember last hash of this branch
 					$lastHash[$branch] = $commitInfos['hash'];
 				}
-				if (preg_match('/FLOW3-([0-9.]{5})/', $commitInfos['tags'], $matches)) {
+				if (preg_match('/FLOW3-([0-9.]{5}(?:-(alpha|beta|rc)[0-9]+)?)/', $commitInfos['tags'], $matches)) {
 					$inRelease = $matches[1];
 				}
 				$commitInfos['inRelease'] = ( $inRelease ? $inRelease : 'next' );
