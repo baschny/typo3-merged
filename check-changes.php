@@ -83,22 +83,32 @@ $out .= "<h1>Issues merged into releases</h1>\n";
 foreach ($projectsToCheck as $project => $projectData) {
 	$commits = array();
 	$releasesToCheck = $projectData['releases'];
+	echo 'Working on ' . $project . ' now.' . PHP_EOL;
 	foreach ($releasesToCheck as $releaseRange) {
 		$startCommit = $releaseRange[1];
 		$branch = $releaseRange[2];
 		$GIT_DIR = $gitRoot . $releaseRange[3] . '/.git';
-		exec('GIT_DIR="' . $GIT_DIR . '" git fetch --all -t');
+		$output = array();
+		exec('GIT_DIR="' . $GIT_DIR . '" git pull --no-rebase --all --tags', $output, $exitCode);
+		if ($exitCode !== 0) {
+			exit($exitCode);
+		}
+		$output = array();
+		exec('GIT_DIR="' . $GIT_DIR . '" git submodule update --init');
 
 		$lastHash[$branch] = '';
 		$gitLogCmd = sprintf($cmdGitLog, $GIT_DIR, $startCommit, $branch);
 		$output = array();
-		exec($gitLogCmd, $output);
+		exec($gitLogCmd, $output, $exitCode);
+		if ($exitCode !== 0) {
+			exit($exitCode);
+		}
 
 		$currentField = '';
 		$commitInfos = array();
 		$inRelease = '';
 		foreach ($output as $line) {
-			if ($line == '--COMMIT--') {
+			if ($line === '--COMMIT--') {
 				// Last line
 				foreach (explode("\n", $commitInfos['body']) as $bodyLine) {
 					$bodyInfo = explode(':', $bodyLine, 2);
@@ -145,7 +155,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 			}
 
 			$infos = explode("\x01", $line);
-			if (count($infos) == 1) {
+			if (count($infos) === 1) {
 				// Continuation line
 				$commitInfos[$currentField] .= "\n" . $line;
 			} else {
