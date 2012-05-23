@@ -38,9 +38,10 @@ if (isset($argv[1]) && file_exists($argv[1])) {
 	exit(1);
 }
 
+// %s = GIT_DIR
 // %s = 4-5-0 (first release)
 // %s = 4-5 (current state)
-$cmdGitLog = 'git log refs/tags/%s..%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
+$cmdGitLog = 'GIT_DIR="%s" git log %s..%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01tags:%%d%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
 /**
  * Takes an issue number and returns the plain integer
@@ -76,19 +77,14 @@ function compareIssues($a, $b) {
 }
 
 $commits = array();
-chdir($gitRoot);
 foreach ($releasesToCheck as $releaseRange) {
 	$branch = $releaseRange[2];
-	$dir = $releaseRange[3];
-	#echo "dir=$dir\n";
-	chdir($dir);
-	exec('git pull --all -t');
-	exec('git submodule update --init');
+	$GIT_DIR = $gitRoot . $releaseRange[3] . '/.git';
+	exec('GIT_DIR="' . $GIT_DIR . '" git pull --all -t');
+	exec('GIT_DIR="' . $GIT_DIR . '" git submodule update --init');
 
 	$lastHash[$branch] = '';
-	$gitLogCmd = sprintf($cmdGitLog, $releaseRange[1], $branch);
-	#echo $gitLogCmd . "\n";
-	#continue;
+	$gitLogCmd = sprintf($cmdGitLog, $GIT_DIR, $releaseRange[1], $branch);
 	$output = '';
 	exec($gitLogCmd, $output);
 	$currentField = '';
