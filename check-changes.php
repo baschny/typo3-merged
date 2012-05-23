@@ -30,35 +30,13 @@
  * Requires the "git" command line tool.
  */
 
-// Configuration
-
-// Release name, First tag, Branch name, Checkout
-$releasesToCheck = array(
-#	array('4.2', 'TYPO3_4-2-0', 'origin/TYPO3_4-2', '/www/shared/TYPO3core/TYPO3_4-2/'),
-#	array('4.3', 'TYPO3_4-3-0', 'origin/TYPO3_4-3', '/www/shared/TYPO3core/TYPO3_4-3/'),
-	array('4.4', 'TYPO3_4-4-0', 'origin/TYPO3_4-4', '/www/shared/TYPO3core/TYPO3_4-4/'),
-	array('4.5', 'TYPO3_4-5-0', 'origin/TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5/'),
-#	array('4.5-BP', 'TYPO3_4-5-0', 'backports/TYPO3_4-5', '/www/shared/TYPO3core/TYPO3_4-5_backports/'),
-	array('4.6', 'TYPO3_4-5-0', 'origin/TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6/'),
-#	array('4.6-BP', 'TYPO3_4-5-0', 'backports/TYPO3_4-6', '/www/shared/TYPO3core/TYPO3_4-6_backports/'),
-	array('4.7', 'TYPO3_4-5-0', 'origin/TYPO3_4-7', '/www/shared/TYPO3core/TYPO3_4-7/'),
-	array('6.0', 'TYPO3_4-5-0', 'origin/master', '/www/shared/TYPO3core/TYPO3_6-0/'),
-);
-$gitRoot = '/www/shared/TYPO3core/';
-$htmlFile = '/home/ernst/TYPO3-Release/index.html';
-
-$reviewLinkPattern = "https://review.typo3.org/#/q/project:TYPO3v4/Core+topic:%s,n,z";
-
-$issueMapping = array(
-	'#M17868' => '#25258',
-	'#M17924' => '#25305',
-	'#M18051' => '#25406',
-	'#M17916' => '#25301',
-	'#24440' => '#23355',
-	'#24410' => '#23355',
-	'#23496' => '#23355',
-	'#23860' => '#23355',
-);
+// include configuration
+if (isset($argv[1]) && file_exists($argv[1])) {
+	require($argv[1]);
+} else {
+	echo 'Configuration file not found or given.' . PHP_EOL;
+	exit(1);
+}
 
 // %s = 4-5-0 (first release)
 // %s = 4-5 (current state)

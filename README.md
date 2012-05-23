@@ -12,3 +12,9 @@ See it in action here:
 
 	http://www.typo3-anbieter.de/typo3-merges/
 	http://bit.ly/flow3-merged-changes
+
+Usage
+-----
+
+You need to prepare git clones and a matching configuration, then run the
+check-changes.php script with the configuration file as first parameter.
