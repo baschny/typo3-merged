@@ -68,11 +68,11 @@ function normalizeIssue($a) {
  * @return integer
  */
 function compareIssues($a, $b) {
-	if ($a === $b) {
+	$dateA = $a['lastUpdate'];
+	$dateB = $b['lastUpdate'];
+	if ($a == $b) {
 		return 0;
 	}
-	$a = normalizeIssue($a);
-	$b = normalizeIssue($b);
 	return ($a > $b) ? -1 : 1;
 }
 
@@ -209,7 +209,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 	}
 
 		// Sort the list
-	uksort($issueInfo, 'compareIssues');
+	uasort($issueInfo, 'compareIssues');
 
 	if ($issueInfo === array()) {
 		$out .= "<h2>$project</h2>\n";
