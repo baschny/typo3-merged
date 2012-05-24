@@ -89,7 +89,11 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$branch = $releaseRange[2];
 		$GIT_DIR = $gitRoot . $releaseRange[3] . '/.git';
 		$output = array();
-		exec('GIT_DIR="' . $GIT_DIR . '" git pull --no-rebase --all --tags', $output, $exitCode);
+		exec('GIT_DIR="' . $GIT_DIR . '" git fetch --all --tags', $output, $exitCode);
+		if ($exitCode !== 0) {
+			exit($exitCode);
+		}
+		exec('GIT_DIR="' . $GIT_DIR . '" git reset --hard origin/HEAD', $output, $exitCode);
 		if ($exitCode !== 0) {
 			exit($exitCode);
 		}
