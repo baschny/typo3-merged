@@ -107,4 +107,17 @@ $projectsToCheck = array(
 	),
 );
 
+/**
+ * Callback to detect if this commit is a "release" commit
+ *
+ * @param $commitInfos array The infos from the commit
+ * @return mixed FALSE|string The released version name
+ */
+function getDetectedReleaseCommitCallback($commitInfos) {
+	if (preg_match('/FLOW3-([0-9.]{5}(?:-(alpha|beta|rc)[0-9]+)?)/', $commitInfos['tags'], $matches)) {
+		return $matches[1];
+	}
+	return NULL;
+}
+
 ?>
