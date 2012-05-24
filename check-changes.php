@@ -88,6 +88,11 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$startCommit = $releaseRange[1];
 		$branch = $releaseRange[2];
 		$GIT_DIR = $gitRoot . $releaseRange[3] . '/.git';
+		if ($gitRootIsWorkingCopy) {
+			// We have a working copy per branch in $gitRoot/$branchName
+			// which we keep up-to-date (faster updates)
+			chdir($gitRoot . $releaseRange[3]);
+		}
 		$output = array();
 		exec('GIT_DIR="' . $GIT_DIR . '" git fetch --all --tags', $output, $exitCode);
 		if ($exitCode !== 0) {
