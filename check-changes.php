@@ -98,7 +98,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 		if ($exitCode !== 0) {
 			exit($exitCode);
 		}
-		exec('GIT_DIR="' . $GIT_DIR . '" git reset --hard origin/HEAD', $output, $exitCode);
+		exec('GIT_DIR="' . $GIT_DIR . '" git reset --hard ' . $branch, $output, $exitCode);
 		if ($exitCode !== 0) {
 			exit($exitCode);
 		}
