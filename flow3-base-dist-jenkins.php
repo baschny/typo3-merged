@@ -2,7 +2,7 @@
 // configuration for FLOW3 base distribution in Jenkins CI job
 
 $gitRoot = getenv('WORKSPACE') . '/';
-$gitRootIsWorkingCopy = FALSE;
+$gitRootIsWorkingCopy = TRUE;
 $htmlFile = getenv('WORKSPACE') . '/index.html';
 
 $reviewLinkPattern = "https://review.typo3.org/#/q/tr:%s,n,z";
