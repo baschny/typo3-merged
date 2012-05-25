@@ -304,8 +304,8 @@ foreach ($projectsToCheck as $project => $projectData) {
 					$text = sprintf('<a title="Merged on %s %s" target="_blank" href="%s?a=commit;h=%s" target="_blank">%s</a>',
 						$issueData['solved'][$releaseBranch]['date'],
 						$versionName,
-						$issueData['solved'][$releaseBranch]['hash'],
 						$projectData['gitWebUrl'],
+						$issueData['solved'][$releaseBranch]['hash'],
 						$versionTag
 					);
 				} elseif (isset($issueData['planned']) && isset($issueData['planned'][$releaseName])) {
