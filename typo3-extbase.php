@@ -1,9 +1,11 @@
 <?php
-// configuration for TYPO3 core
+// configuration for TYPO3 system extensions:
+// - extbase
+// - fluid
 
 $gitRoot = '/www/shared/TYPO3ext/';
 $gitRootIsWorkingCopy = TRUE;
-$htmlFile = '/home/ernst/TYPO3-Release/sysext.html';
+$htmlFile = 'extbase.html';
 
 $reviewLinkPattern = "https://review.typo3.org/#/q/tr:%s,n,z";
 
@@ -32,16 +34,6 @@ $projectsToCheck = array(
 			array('6.0', 'refs/tags/1.3.0', 'origin/master', 'fluid/master'),
 		),
 		'mapBranchReleaseFunction' => 'mapBranchReleaseExtbase',
-	),
-	'TYPO3 Linkvalidator' => array(
-		'gitWebUrl' => 'http://git.typo3.org/TYPO3v4/Extensions/linkvalidator.git',
-		'releases' => array(
-			# project, starting point, branch, working copy path
-			array('4.5', 'refs/tags/4.5', 'origin/TYPO3_4-5', 'linkvalidator/TYPO3_4-5'),
-			array('4.6', 'refs/tags/4.5', 'origin/TYPO3_4-6', 'linkvalidator/TYPO3_4-6'),
-			array('4.7', 'refs/tags/4.5', 'origin/linkvalidator_4-7', 'linkvalidator/linkvalidator_4-7'),
-			array('6.0', 'refs/tags/4.5', 'origin/master', 'linkvalidator/master'),
-		),
 	),
 );
 
