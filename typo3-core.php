@@ -3,7 +3,7 @@
 
 $gitRoot = '/www/shared/TYPO3core/';
 $gitRootIsWorkingCopy = TRUE;
-$htmlFile = '/home/ernst/TYPO3-Release/index.html';
+$htmlFile = 'core.html';
 
 $reviewLinkPattern = "https://review.typo3.org/#/q/tr:%s,n,z";
 
