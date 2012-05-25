@@ -44,23 +44,6 @@ if (isset($argv[1]) && file_exists($argv[1])) {
 $cmdGitLog = 'GIT_DIR="%s" git log %s..%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01tags:%%d%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
 /**
- * Takes an issue number and returns the plain integer
- * value, corrected for the offset needed on mantis issues.
- *
- * @param string $a
- * @return integer
- */
-function normalizeIssue($a) {
-	if (preg_match('/^#(M)?(\d+)/', $a, $matches)) {
-		$b = intval($matches[2]);
-		if ($matches[1] == 'M') {
-			$b = $b - 20000;
-		}
-		return $b;
-	}
-}
-
-/**
  * Compare two issue numbers in string format, e.g. #123 and #M567.
  *
  * @param string $a
