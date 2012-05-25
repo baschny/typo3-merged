@@ -225,6 +225,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 	$out .= "<th>Release</th>\n";
 	foreach ($releasesToCheck as $release) {
 		$releaseName = $release[0];
+		if (isset($projectData['mapBranchReleaseFunction'])) {
+			$releaseName = $projectData['mapBranchReleaseFunction']($release[0]);
+		}
 		$out .= sprintf('<th class="release">%s</th>', $releaseName);
 	}
 	$out .= '<th class="review">Reviews</th>';
@@ -280,6 +283,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 			} else {
 				if (isset($issueData['solved'][$releaseBranch])) {
 					$class = 'info-solved';
+					if (isset($projectData['mapBranchReleaseFunction'])) {
+						$releaseName = $projectData['mapBranchReleaseFunction']($releaseName);
+					}
 					if ($issueData['solved'][$releaseBranch]['inRelease'] == 'next') {
 						$versionName = 'for next release';
 						$versionTag = 'next';
