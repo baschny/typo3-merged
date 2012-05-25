@@ -82,6 +82,7 @@ $out .= "<h1>Issues merged into releases</h1>\n";
 
 foreach ($projectsToCheck as $project => $projectData) {
 	$commits = array();
+	$lastHash = array();
 	$releasesToCheck = $projectData['releases'];
 	echo 'Working on ' . $project . ' now.' . PHP_EOL;
 	foreach ($releasesToCheck as $releaseRange) {
