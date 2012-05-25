@@ -92,6 +92,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 		if ($gitRootIsWorkingCopy) {
 			// We have a working copy per branch in $gitRoot/$branchName
 			// which we keep up-to-date (faster updates)
+			$oldDir = getcwd();
 			chdir($gitRoot . $releaseRange[3]);
 		}
 		$output = array();
@@ -110,6 +111,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$gitLogCmd = sprintf($cmdGitLog, $GIT_DIR, $startCommit, $branch);
 		$output = array();
 		exec($gitLogCmd, $output, $exitCode);
+		if ($gitRootIsWorkingCopy) {
+			chdir($oldDir);
+		}
 		if ($exitCode !== 0) {
 			exit($exitCode);
 		}
