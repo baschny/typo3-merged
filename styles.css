@@ -32,6 +32,16 @@ h1 {
 h2 {
 	font-size: 15px;
 }
+
+#controls {
+    height: 20px;
+    margin: 0 0 10px 0;
+}
+
+#controls button {
+    margin: 0 5px 0 0;
+}
+
 table {
 	border-collapse: collapse;
 }
