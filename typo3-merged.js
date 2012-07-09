@@ -43,7 +43,7 @@ $(document).ready(function(){
 	 */
 	function hideResolved() {
 		// hide all those entries where nothing has to be done
-		$('tr').addClass('nothingToDo');
+		$('tr').addClass('nothingToDo').show();
 
 		$('.info-planned').each(function() {
 			$(this).parent().removeClass('nothingToDo');
