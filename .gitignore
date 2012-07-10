@@ -2,9 +2,7 @@
 *.orig
 *.backup
 *.old
-index.html
+*.html
 .idea
 update-changes.sh
-
-core.html
 .DS_Store
