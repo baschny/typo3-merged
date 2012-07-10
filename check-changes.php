@@ -231,6 +231,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 		} elseif (preg_match('/^#M(\d+)/', $issueNumber, $match)) {
 			$issueLink = sprintf('http://bugs.typo3.org/view.php?id=%s', $match[1]);
 		}
+		$topic = substr($issueNumber, 1);
 		$issueNumber = sprintf('<a href="%s" target="_blank">%s</a>', $issueLink, $issueNumber);
 		$out .= sprintf('<td class="issue">%s</td>', $issueNumber);
 		$subject = '';
@@ -296,7 +297,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 					$text = sprintf('<span title="Planned for %s, not merged yet">TODO</span>', $releaseName);
 				}
 			}
-			$out .= sprintf('<td class="%s">%s</td>', $class, $text);
+			$out .= sprintf('<td class="%s" branch="%s" issue="%s">%s</td>', $class, substr($releaseBranch, 7), $topic, $text);
 		}
 		$out .= '<td class="review">';
 		if ($reviewLink) {
@@ -318,6 +319,11 @@ foreach ($projectsToCheck as $project => $projectData) {
 
 date_default_timezone_set('Europe/Berlin');
 $out .= sprintf('<p>Generated on %s. Based on check-changes.php by <a href="mailto:ernst@cron-it.de">Ernesto Baschny</a>.</p>', strftime('%c', time()));
+
+// include JS stuff
+$out .= '<script src="jquery-1.7.2.min.js"></script>';
+$out .= '<script src="typo3-merged.js"></script>';
+
 $out .= "</body></html>";
 
 $fh = fopen($htmlFile, 'w');

@@ -5,3 +5,6 @@
 index.html
 .idea
 update-changes.sh
+
+core.html
+.DS_Store
