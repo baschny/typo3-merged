@@ -40,6 +40,18 @@ h2 {
 
 #controls button {
     margin: 0 5px 0 0;
+    border: 1px solid #666;
+    background-color: #ddd;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+
+#controls button:hover {
+    background-color: #aaa;
+}
+
+#controls button.activeFilter {
+    background-color: #aaa;
 }
 
 table {
