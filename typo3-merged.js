@@ -6,17 +6,29 @@ $(document).ready(function(){
 	$('#controls').append('<button id="showAllEntries">show all</button>');
 	$('#showAllEntries').click(function() {
 		$('tr').show();
+
+		// set cookie for this filter
+		$.cookie('lastActiveFilter', 'showAllEntries');
 	});
 
 	$('#controls').append('<button id="hideResolved">hide done</button>');
 	$('#hideResolved').click(function() {
 		hideResolved();
+
+		// set cookie for this filter
+		$.cookie('lastActiveFilter', 'hideResolved');
 	});
 
 	$('.info-planned').each(function() {
 		$(this).parent().addClass('todo_' + $(this).attr('branch'));
 		addButton($(this).attr('branch'));
 	});
+
+	// read the cookie and restore the last filter
+	if ($.cookie('lastActiveFilter') != null) {
+		$('#' + $.cookie('lastActiveFilter')).click();
+	}
+
 
 	/**
 	 * Called multiple times per target branch, this adds a button to filter the list
@@ -33,6 +45,9 @@ $(document).ready(function(){
 				$('tr').hide();
 				$('tbody tr:first').show();
 				$('.todo_' + branch).show();
+
+				// set cookie for this filter
+				$.cookie('lastActiveFilter', branch);
 			});
 		}
 	}
