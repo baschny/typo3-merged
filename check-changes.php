@@ -322,6 +322,7 @@ $out .= sprintf('<p>Generated on %s. Based on check-changes.php by <a href="mail
 
 // include JS stuff
 $out .= '<script src="jquery-1.7.2.min.js"></script>';
+$out .= '<script src="jquery.cookie.js"></script>';
 $out .= '<script src="typo3-merged.js"></script>';
 
 $out .= "</body></html>";
