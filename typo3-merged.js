@@ -2,6 +2,12 @@ $(document).ready(function(){
 	// add button to control filtering
 	$('h2').after('<div id="controls"></div>');
 
+	// normalize the branch name to not contain dots (otherwise the CSS/JS-Selectors
+	// will not work...
+	$('td.info-planned').each(function() {
+		$(this).attr('branch', normalizeName($(this).attr('branch')));
+	});
+
 
 	$('#controls').append('<button id="showAllEntries">show all</button>');
 	$('#showAllEntries').click(function() {
@@ -25,16 +31,30 @@ $(document).ready(function(){
 	 * @param string the branch name, e.g. "TYPO3_4-7"
 	 */
 	function addButton(branch) {
+		officialBranchName = branch;
+		branch=normalizeName(branch);
+
 		if ($('#'+branch).length) {
 
 		} else {
-			$('#controls').append('<button id="' + branch + '">Show only ' + branch + '</button>');
+			$('#controls').append('<button id="' + branch + '">Show only ' + officialBranchName + '</button>');
 			$('#' + branch).click({branch: branch}, function() {
 				$('tr').hide();
 				$('tbody tr:first').show();
 				$('.todo_' + branch).show();
 			});
 		}
+	}
+
+	/**
+	 * Normalizes names of e.g. branches with dots in it (each dot gets replaced with "_")
+	 *
+	 * @param name string the name to normalize
+	 * @return string the normalized name
+	 */
+	function normalizeName(name) {
+		name=name.replace(".","_");
+		return name;
 	}
 
 	/**
