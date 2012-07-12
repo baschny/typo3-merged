@@ -110,7 +110,9 @@ $(document).ready(function(){
 	 * Shows the number of rows on top of the table.
 	 */
 	function updateCount() {
-		count = $('table tr:visible').length - 1;
-		$('div.count').html('Listing ' + count + ' entries.');
+		$('table').each(function() {
+			count = $(this).find('tr:visible').length - 1;
+			$(this).prev('div.count').html('Listing ' + count + ' entries.');
+		});
 	}
 });
