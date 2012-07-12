@@ -94,7 +94,7 @@ $(document).ready(function(){
 	 * @return string the normalized name
 	 */
 	function normalizeName(name) {
-		name=name.replace(".","_");
+		name = name.replace(".","_");
 		return name;
 	}
 
