@@ -54,6 +54,11 @@ h2 {
     background-color: #aaa;
 }
 
+.count {
+	font-size: 90%;
+	margin-bottom: 5px;
+}
+
 table {
 	border-collapse: collapse;
 }
