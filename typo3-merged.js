@@ -8,6 +8,8 @@ $(document).ready(function(){
 		$(this).attr('branch', normalizeName($(this).attr('branch')));
 	});
 
+	updateCount();
+
 
 	$('#controls').append('<button id="showAllEntries">show all</button>');
 	$('#showAllEntries').click(function() {
