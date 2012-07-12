@@ -12,7 +12,8 @@ $(document).ready(function(){
 			$(this).parent().next().next().find('tr').show();
 
 			// set cookie for this filter
-			$.cookie('lastActiveFilter', 'showAllEntries');
+			product = $(this).parent().prev('h2').html();
+			$.cookie('lastActiveFilter', product + '%showAllEntries');
 
 			updateCount();
 		});
@@ -25,7 +26,8 @@ $(document).ready(function(){
 
 			hideResolved($(this).parent().next().next());
 			// set cookie for this filter
-			$.cookie('lastActiveFilter', 'hideResolved');
+			product = $(this).parent().prev('h2').html();
+			$.cookie('lastActiveFilter', product + '%hideResolved');
 
 			updateCount();
 		});
@@ -52,7 +54,15 @@ $(document).ready(function(){
 
 	// read the cookie and restore the last filter
 	if ($.cookie('lastActiveFilter') != null) {
-		$('#' + $.cookie('lastActiveFilter')).click();
+		splitAtPosition = $.cookie('lastActiveFilter').indexOf('%');
+		product = $.cookie('lastActiveFilter').substring(0, splitAtPosition);
+		branch = $.cookie('lastActiveFilter').substring(splitAtPosition + 1);
+
+		$('h2').each(function() {
+			if ($(this).html() == product) {
+				$(this).next().find('.' + branch).click();
+			}
+		});
 	}
 
 
@@ -80,7 +90,8 @@ $(document).ready(function(){
 				table.find('.todo_' + branch).show();
 
 				// set cookie for this filter
-				$.cookie('lastActiveFilter', branch);
+				product = table.prev().prev().prev('h2').html();
+				$.cookie('lastActiveFilter', product + '%' +branch);
 
 				updateCount();
 			});
