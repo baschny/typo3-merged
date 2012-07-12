@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	// add button to control filtering
-	$('h2').after('<div id="controls"></div>');
+	$('h2').after('<div id="controls"></div><div class="count"></div>');
 
 	// normalize the branch name to not contain dots (otherwise the CSS/JS-Selectors
 	// will not work...
@@ -19,6 +19,8 @@ $(document).ready(function(){
 
 		// set cookie for this filter
 		$.cookie('lastActiveFilter', 'showAllEntries');
+
+		updateCount();
 	});
 
 	$('#controls').append('<button id="hideResolved">hide done</button>');
@@ -28,9 +30,10 @@ $(document).ready(function(){
         $(this).addClass('activeFilter');
 
 		hideResolved();
-
 		// set cookie for this filter
 		$.cookie('lastActiveFilter', 'hideResolved');
+
+		updateCount();
 	});
 
 	$('.info-planned').each(function() {
@@ -69,6 +72,8 @@ $(document).ready(function(){
 
 				// set cookie for this filter
 				$.cookie('lastActiveFilter', branch);
+
+				updateCount();
 			});
 		}
 	}
@@ -99,4 +104,11 @@ $(document).ready(function(){
 		$('tbody tr:first').show();
 	}
 
+	/**
+	 * Shows the number of rows on top of the table.
+	 */
+	function updateCount() {
+		count = $('table tr:visible').length - 1;
+		$('div.count').html('Listing ' + count + ' entries.');
+	}
 });
