@@ -5,11 +5,19 @@ $(document).ready(function(){
 
 	$('#controls').append('<button id="showAllEntries">show all</button>');
 	$('#showAllEntries').click(function() {
+        // mark this (and only this) button as active
+        $('button').removeClass('activeFilter');
+        $(this).addClass('activeFilter');
+
 		$('tr').show();
 	});
 
 	$('#controls').append('<button id="hideResolved">hide done</button>');
 	$('#hideResolved').click(function() {
+        // mark this (and only this) button as active
+        $('button').removeClass('activeFilter');
+        $(this).addClass('activeFilter');
+
 		hideResolved();
 	});
 
@@ -30,6 +38,10 @@ $(document).ready(function(){
 		} else {
 			$('#controls').append('<button id="' + branch + '">Show only ' + branch + '</button>');
 			$('#' + branch).click({branch: branch}, function() {
+                // mark this (and only this) button as active
+                $('button').removeClass('activeFilter');
+                $(this).addClass('activeFilter');
+
 				$('tr').hide();
 				$('tbody tr:first').show();
 				$('.todo_' + branch).show();
