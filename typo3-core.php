@@ -19,6 +19,18 @@ $issueMapping = array(
 	'#25006' => '#33853',
 );
 
+// list of issues to be ignored as TODOs from a certain branch. Used to
+// shorten the list of issues that are marked "TODO" if e.g. the originally
+// advertised backport (in the commit message on the master branch) will
+// not be needed or is not possible to be back-ported.
+// This is similar to an "ABANDONED"-state, but not for a changeset, but
+// instead for a whole issue+branch combination.
+$ignoreList = array(
+	'TYPO3_4-5' => array(
+		'28594' => 'Backporting to 4.5 not needed, see comment in Gerrit.'
+	),
+);
+
 $projectsToCheck = array(
 	'TYPO3 CMS Core' => array(
 		'gitWebUrl' => 'http://git.typo3.org/TYPO3v4/Core.git',

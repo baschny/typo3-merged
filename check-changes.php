@@ -339,6 +339,13 @@ foreach ($projectsToCheck as $project => $projectData) {
 						$issueData['solved'][$originalBranch]['hash']
 					);
 				}
+			} elseif(isset($ignoreList[$branchName][$topic])) {
+					// in case this issue + branch combination are on the ignore list, mark it appropriately
+				$class = 'info-not-needed';
+				$text = sprintf('<span title="%s" href="" target="_blank">quitted</span>',
+					$ignoreList[$branchName][$topic]
+				);
+
 			} else {
 				if (isset($issueData['solved'][$releaseBranch])) {
 					$class = 'info-solved';

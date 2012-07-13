@@ -88,7 +88,9 @@ th {
 	border-color: #FF8700;
 }
 
-td.info-planned, td.info-solved {
+td.info-planned,
+td.info-solved,
+td.info-not-needed {
 	text-align: center;
 }
 td.info-planned {
@@ -99,6 +101,10 @@ td.info-planned {
 td.info-planned-review {
 	color: black;
 	background-color: yellow;
+}
+td.info-not-needed {
+    color: #fff;
+    background-color: #555;
 }
 
 tr:hover {
