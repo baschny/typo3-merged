@@ -37,14 +37,30 @@ For speed improvements, we're keeping a full clone for each branch at
 	git clone git://git.typo3.org/TYPO3v4/Core.git TYPO3_4-5
 	git clone git://git.typo3.org/TYPO3v4/Core.git TYPO3_4-4
 
+Gerrit access
+-------------
+
+Make sure you have SSH access to gerrit. Configure your username in `$HOME/.ssh/config`:
+
+	Host review.typo3.org
+		User baschny
+		Port 29418
+
+Your public key must be known to gerrit and your private key accessible in the 
+environment where check-changes.php runs. You might want to use the `keychain` tool
+to keep your private key with a passphrase but accessible through a long runing
+ssh-agent.
+
+Test the ssh with:
+
+	$ ssh review.typo3.org -p 29418 gerrit version
+	gerrit version 2.2.2.1-3-gb2ba1a2
+
+Running
+-------
+
 Then run the script `check-changes.php` with one single parameter that points to the
-TYPO3-Core config file. See below:
-
-Usage
------
-
-You need to prepare git clones and a matching configuration, then run the
-check-changes.php script with the configuration file as first parameter.
+TYPO3-Core config file.
 
 	./check-changes.php typo3-core.php
 
