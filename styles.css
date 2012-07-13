@@ -96,6 +96,10 @@ td.info-planned {
 	color: white;
 	background-color: red;
 }
+td.info-planned-review {
+	color: black;
+	background-color: yellow;
+}
 
 tr:hover {
 	background-color: #FFFFDD;

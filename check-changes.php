@@ -43,6 +43,74 @@ if (isset($argv[1]) && file_exists($argv[1])) {
 // %s = 4-5 (current state)
 $cmdGitLog = 'GIT_DIR="%s" git log %s..%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01tags:%%d%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
+// Requires that ssh is allowed to gerrit (private key)
+$cmdGerrit = 'ssh review.typo3.org -p 29418 gerrit query --format json project:%s';
+
+/**
+ * Return information from gerrit issues
+ *
+ * @param string $project The gerrit Project name
+ * @return array indexed by "branch" and then "issueNumber" containing then an array of open review items
+ */
+function fetchGerritReviewRequests($project) {
+	$cmd = $GLOBALS['cmdGerrit'];
+	$lastSortKey = '';
+	$gerritFinished = FALSE;
+	$issues = array();
+	while (! $gerritFinished) {
+		if ($lastSortKey) {
+			$cmd .= ' resume_sortkey:' . $lastSortKey;
+		}
+		$cmd = sprintf($cmd, $project);
+		$handle = popen($cmd, 'r');
+		while (! feof($handle) ) {
+			$line = fgets($handle);
+			$item = json_decode($line, TRUE);
+			if (!$item) {
+				continue;
+			}
+			if (isset($item['type']) && $item['type'] == 'stats') {
+				if (intval($item['rowCount']) < 500) {
+					// This was the last call
+					$gerritFinished = TRUE;
+				}
+			} else {
+				$lastSortKey = $item['sortKey'];
+				if (isset($item['topic'])) {
+					$issueNumber = $item['topic'];
+					if (preg_match('/^issue\/(\d+)/', $issueNumber, $matches)) {
+						$issueNumber = $matches[1];
+					}
+					$issueNumbers = array($issueNumber);
+				} else if (isset($item['trackingIds'])) {
+					$issueNumbers = array();
+					foreach ($item['trackingIds'] as $tracking) {
+						if ($tracking['system'] == 'Forge') {
+							$issueNumbers[] = $tracking['id'];
+						}
+					}
+				} else {
+					// no topic found
+					continue;
+				}
+				if ($item['status'] == 'MERGED' || $item['status'] == 'ABANDONED') {
+					// not interested in "merged" status, as we have those in GIT already
+					continue;
+				}
+				$branch = $item['branch'];
+				$url = $item['url'];
+				foreach ($issueNumbers as $issueNumber) {
+					// Collect information in big array
+					$issues[$branch][$issueNumber][] = $item;
+				}
+			}
+		}
+		fclose($handle);
+	}
+	return $issues;
+}
+
+
 /**
  * Compare two issue numbers in string format, e.g. #123 and #M567.
  *
@@ -68,6 +136,10 @@ foreach ($projectsToCheck as $project => $projectData) {
 	$lastHash = array();
 	$releasesToCheck = $projectData['releases'];
 	echo 'Working on ' . $project . ' now.' . PHP_EOL;
+	$gerritIssues = array();
+	if (isset($projectData['gerritProject'])) {
+		$gerritIssues = fetchGerritReviewRequests($projectData['gerritProject']);
+	}
 	foreach ($releasesToCheck as $releaseRange) {
 		$startCommit = $releaseRange[1];
 		$branch = $releaseRange[2];
@@ -237,7 +309,10 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$subject = '';
 		foreach ($releasesToCheck as $release) {
 			$releaseName = str_replace('-BP', '', $release[0]);
+			// e.g. origin/TYPO3_4-5:
 			$releaseBranch = $release[2];
+			// e.g. TYPO3_4-5:
+			$branchName = substr($releaseBranch, 7);
 			$class = 'info-none';
 			$text = '';
 			if (isset($issueData['solved'][$releaseBranch])) {
@@ -293,11 +368,17 @@ foreach ($projectsToCheck as $project => $projectData) {
 						$versionTag
 					);
 				} elseif (isset($issueData['planned']) && isset($issueData['planned'][$releaseName])) {
-					$class = 'info-planned';
-					$text = sprintf('<span title="Planned for %s, not merged yet">TODO</span>', $releaseName);
+					if (isset($gerritIssues[$branchName][$topic])) {
+						$class = 'info-planned info-planned-review';
+						$url = $gerritIssues[$branchName][$topic][0]['url'];
+						$text = sprintf('<span title="Planned for %s, review in process, not ready yet"><a href="%s" target="_blank">Review</a></span>', $releaseName, $url);
+					} else {
+						$class = 'info-planned';
+						$text = sprintf('<span title="Planned for %s, not merged yet">TODO</span>', $releaseName);
+					}
 				}
 			}
-			$out .= sprintf('<td class="%s" branch="%s" issue="%s">%s</td>', $class, substr($releaseBranch, 7), $topic, $text);
+			$out .= sprintf('<td class="%s" branch="%s" issue="%s">%s</td>', $class, $branchName, $topic, $text);
 		}
 		$out .= '<td class="review">';
 		if ($reviewLink) {

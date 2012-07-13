@@ -14,6 +14,7 @@ $issueMapping = array(
 
 $projectsToCheck = array(
 	'TYPO3 Extbase' => array(
+		'gerritProject' => 'TYPO3v4/CoreProjects/MVC/extbase',
 		'gitWebUrl' => 'http://git.typo3.org/TYPO3v4/CoreProjects/MVC/extbase.git',
 		'releases' => array(
 			# project, starting point, branch, working copy path
@@ -25,6 +26,7 @@ $projectsToCheck = array(
 		'mapBranchReleaseFunction' => 'mapBranchReleaseExtbase',
 	),
 	'TYPO3 Fluid' => array(
+		'gerritProject' => 'TYPO3v4/CoreProjects/MVC/fluid',
 		'gitWebUrl' => 'http://git.typo3.org/TYPO3v4/CoreProjects/MVC/fluid.git',
 		'releases' => array(
 			# project, starting point, branch, working copy path
