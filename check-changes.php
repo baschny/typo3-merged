@@ -137,9 +137,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 	$releasesToCheck = $projectData['releases'];
 	echo 'Working on ' . $project . ' now.' . PHP_EOL;
 	$gerritIssues = array();
-	if (isset($projectData['gerritProject'])) {
-		$gerritIssues = fetchGerritReviewRequests($projectData['gerritProject']);
-	}
+	$urlParts = parse_url($projectData['gitWebUrl']);
+	$gerritProject = ltrim(substr($urlParts['path'], 0, -4), '/');
+	$gerritIssues = fetchGerritReviewRequests($gerritProject);
 	foreach ($releasesToCheck as $releaseRange) {
 		$startCommit = $releaseRange[1];
 		$branch = $releaseRange[2];
