@@ -1,51 +1,68 @@
 $(document).ready(function(){
-	// add button to control filtering
-	$('h2').after('<div id="controls"></div><div class="count"></div>');
+	$('table').each(function() {
+		// add button to control filtering
+		$(this).before('<div class="controls"></div><div class="count"></div>');
 
-	// normalize the branch name to not contain dots (otherwise the CSS/JS-Selectors
-	// will not work...
-	$('td.info-planned').each(function() {
-		$(this).attr('branch', normalizeName($(this).attr('branch')));
+		$(this).prev().prev('.controls').append('<button class="showAllEntries">show all</button>');
+		$(this).prev().prev('.controls').find('.showAllEntries').click(function() {
+			// mark this (and only this) button as active
+			$('button').removeClass('activeFilter');
+			$(this).addClass('activeFilter');
+
+			$(this).parent().next().next().find('tr').show();
+
+			// set cookie for this filter
+			product = $(this).parent().prev('h2').html();
+			$.cookie('lastActiveFilter', product + '%showAllEntries');
+
+			updateCount();
+		});
+
+		$(this).prev().prev('.controls').append('<button class="hideResolved">hide done</button>');
+		$(this).prev().prev('.controls').find(' .hideResolved').click(function() {
+			// mark this (and only this) button as active
+			$('button').removeClass('activeFilter');
+			$(this).addClass('activeFilter');
+
+			hideResolved($(this).parent().next().next());
+			// set cookie for this filter
+			product = $(this).parent().prev('h2').html();
+			$.cookie('lastActiveFilter', product + '%hideResolved');
+
+			updateCount();
+		});
+
+		// normalize the branch name to not contain dots (otherwise the CSS/JS-Selectors
+		// will not work...
+		$('td.info-planned').each(function() {
+			$(this).attr('branch', normalizeName($(this).attr('branch')));
+		});
+
+
+
+		$(this).find('.info-planned').each(function() {
+			$(this).parent().addClass('todo_' + $(this).attr('branch'));
+			addButton(
+				$(this).attr('branch'),
+				$(this).parent().parent().parent()
+			);
+		});
+
 	});
 
 	updateCount();
 
-
-	$('#controls').append('<button id="showAllEntries">show all</button>');
-	$('#showAllEntries').click(function() {
-        // mark this (and only this) button as active
-        $('button').removeClass('activeFilter');
-        $(this).addClass('activeFilter');
-
-		$('tr').show();
-
-		// set cookie for this filter
-		$.cookie('lastActiveFilter', 'showAllEntries');
-
-		updateCount();
-	});
-
-	$('#controls').append('<button id="hideResolved">hide done</button>');
-	$('#hideResolved').click(function() {
-        // mark this (and only this) button as active
-        $('button').removeClass('activeFilter');
-        $(this).addClass('activeFilter');
-
-		hideResolved();
-		// set cookie for this filter
-		$.cookie('lastActiveFilter', 'hideResolved');
-
-		updateCount();
-	});
-
-	$('.info-planned').each(function() {
-		$(this).parent().addClass('todo_' + $(this).attr('branch'));
-		addButton($(this).attr('branch'));
-	});
-
 	// read the cookie and restore the last filter
 	if ($.cookie('lastActiveFilter') != null) {
-		$('#' + $.cookie('lastActiveFilter')).click();
+		splitAtPosition = $.cookie('lastActiveFilter').indexOf('%');
+		product = $.cookie('lastActiveFilter').substring(0, splitAtPosition);
+		branch = $.cookie('lastActiveFilter').substring(splitAtPosition + 1);
+
+		$('h2').each(function() {
+			if ($(this).html() == product) {
+				$(this).next().find('.' + branch).click();
+			}
+		});
 	}
 
 
@@ -55,25 +72,26 @@ $(document).ready(function(){
 	 *
 	 * @param string the branch name, e.g. "TYPO3_4-7"
 	 */
-	function addButton(branch) {
+	function addButton(branch, table) {
 		officialBranchName = branch;
 		branch=normalizeName(branch);
 
-		if ($('#'+branch).length) {
-
+		if (table.prev().prev().find('.'+branch).length) {
+			// e.g. the branch-button exists already
 		} else {
-			$('#controls').append('<button id="' + branch + '">Show only ' + officialBranchName + '</button>');
-			$('#' + branch).click({branch: branch}, function() {
+			table.prev().prev().append('<button class="' + branch + '">Show only ' + officialBranchName + '</button>');
+			table.prev().prev().find('.' + branch).click({branch: branch, table: table}, function() {
                 // mark this (and only this) button as active
-                $('button').removeClass('activeFilter');
+                $(this).parent().find('button').removeClass('activeFilter');
                 $(this).addClass('activeFilter');
 
-				$('tr').hide();
-				$('tbody tr:first').show();
-				$('.todo_' + branch).show();
+				table.find('tr').hide();
+				table.find('tbody tr:first').show();
+				table.find('.todo_' + branch).show();
 
 				// set cookie for this filter
-				$.cookie('lastActiveFilter', branch);
+				product = table.prev().prev().prev('h2').html();
+				$.cookie('lastActiveFilter', product + '%' +branch);
 
 				updateCount();
 			});
@@ -87,7 +105,7 @@ $(document).ready(function(){
 	 * @return string the normalized name
 	 */
 	function normalizeName(name) {
-		name=name.replace(".","_");
+		name = name.replace(".","_");
 		return name;
 	}
 
@@ -95,22 +113,25 @@ $(document).ready(function(){
 	 * Hides all rows that have not a single TODO (e.g. those that need no
 	 * action at the moment)
 	 */
-	function hideResolved() {
+	function hideResolved(table) {
 		// hide all those entries where nothing has to be done
-		$('tr').addClass('nothingToDo').show();
+		table.find('tr').addClass('nothingToDo').show();
 
-		$('.info-planned').each(function() {
+		table.find('.info-planned').each(function() {
 			$(this).parent().removeClass('nothingToDo');
 		});
-		$('tr.nothingToDo').hide();
-		$('tbody tr:first').show();
+
+		table.find('tr.nothingToDo').hide();
+		table.find('tbody tr:first').show();
 	}
 
 	/**
 	 * Shows the number of rows on top of the table.
 	 */
 	function updateCount() {
-		count = $('table tr:visible').length - 1;
-		$('div.count').html('Listing ' + count + ' entries.');
+		$('table').each(function() {
+			count = $(this).find('tr:visible').length - 1;
+			$(this).prev('div.count').html('Listing ' + count + ' entries.');
+		});
 	}
 });

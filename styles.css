@@ -33,12 +33,12 @@ h2 {
 	font-size: 15px;
 }
 
-#controls {
+.controls {
     height: 20px;
     margin: 0 0 10px 0;
 }
 
-#controls button {
+.controls button {
     margin: 0 5px 0 0;
     border: 1px solid #666;
     background-color: #ddd;
@@ -46,11 +46,11 @@ h2 {
     padding: 2px 4px;
 }
 
-#controls button:hover {
+.controls button:hover {
     background-color: #aaa;
 }
 
-#controls button.activeFilter {
+.controls button.activeFilter {
     background-color: #aaa;
 }
 
