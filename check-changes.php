@@ -44,7 +44,7 @@ if (isset($argv[1]) && file_exists($argv[1])) {
 $cmdGitLog = 'GIT_DIR="%s" git log %s..%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01tags:%%d%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
 // Requires that ssh is allowed to gerrit (private key)
-$cmdGerrit = 'ssh review.typo3.org -p 29418 gerrit query --format json project:%s';
+$cmdGerrit = 'ssh review.typo3.org -p 29418 gerrit query --format json status:open project:%s';
 
 /**
  * Return information from gerrit issues
@@ -91,10 +91,6 @@ function fetchGerritReviewRequests($project) {
 					}
 				} else {
 					// no topic found
-					continue;
-				}
-				if ($item['status'] == 'MERGED' || $item['status'] == 'ABANDONED') {
-					// not interested in "merged" status, as we have those in GIT already
 					continue;
 				}
 				$branch = $item['branch'];
