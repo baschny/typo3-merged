@@ -341,7 +341,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 				}
 			} elseif(isset($ignoreList[$branchName][$topic])) {
 					// in case this issue + branch combination are on the ignore list, mark it appropriately
-				$class = 'info-not-needed';
+				$class = 'info-planned info-not-needed';
 				$text = sprintf('<span title="%s" href="" target="_blank">quitted</span>',
 					$ignoreList[$branchName][$topic]
 				);
