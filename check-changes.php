@@ -402,7 +402,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 }
 
 date_default_timezone_set('Europe/Berlin');
-$out .= sprintf('<p>Generated on %s. Based on check-changes.php by <a href="mailto:ernst@cron-it.de">Ernesto Baschny</a>.</p>', strftime('%c', time()));
+$out .= sprintf('<p>Generated on %s. Based on check-changes.php by <a href="mailto:ernst@cron-it.de">Ernesto Baschny</a>, extended by <a href="mailto:karsten.dambekalns@typo3.org">Karsten Dambekalns</a> and <a href="mailto:mario.rimann@typo3.org">Mario Rimann</a></p>', strftime('%c', time()));
 
 // include JS stuff
 $out .= '<script src="jquery-1.7.2.min.js"></script>';
