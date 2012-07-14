@@ -30,8 +30,14 @@ $ignoreList = array(
 		'28594' => 'Backporting to 4.5 not needed, see comment in Gerrit.',
 		'28616' => 'Backporting to 4.5 not desired, see comment in Gerrit.',
 		'30311' => 'IDNA converter is not in 4.5, adding would count as feature, will not be backported, see comment in Gerrit',
+		'30311' => 'IDNA converter is not in 4.5, adding would count as feature, will not be backported, see comment in Gerrit',
 		'31943' => 'Seems to not apply on 4.5, see comment in Gerrit.',
 		'32938' => 'Does not apply to 4.5, see comment in Gerrit.',
+		'35296' => 'Affects tx_form which was introduced in 4.6, does not apply to 4.5, see comment in Gerrit',
+		'36937' => 'Does not apply to 4.5, see comment in Gerrit.',
+	),
+	'TYPO3_4-6' => array(
+		'36937' => 'Does not apply to 4.6, see comment in Gerrit.',
 	),
 );
 
