@@ -105,6 +105,7 @@ td.info-planned-review {
 td.info-not-needed {
     color: #fff;
     background-color: #555;
+	font-weight: normal;
 }
 
 tr:hover {

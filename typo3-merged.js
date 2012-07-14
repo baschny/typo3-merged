@@ -93,7 +93,7 @@ $(document).ready(function(){
 				product = table.prev().prev().prev('h2').html();
 				$.cookie('lastActiveFilter', product + '%' +branch);
 
-				updateCount();
+				updateCount(branch);
 			});
 		}
 	}
@@ -128,10 +128,19 @@ $(document).ready(function(){
 	/**
 	 * Shows the number of rows on top of the table.
 	 */
-	function updateCount() {
+	function updateCount(targetBranch) {
+		
 		$('table').each(function() {
 			count = $(this).find('tr:visible').length - 1;
-			$(this).prev('div.count').html('Listing ' + count + ' entries.');
+			
+			countNotNeeded = 0
+			if(targetBranch != undefined) {
+				countNotNeeded = $(this).find('tr:visible .info-not-needed[branch="' + targetBranch +'"]').length;
+				result = 'Listing ' + count + ' entries of which ' + (count-countNotNeeded) + ' require attention.';
+			} else {
+				result = 'Listing ' + count + ' entries.';
+			}
+			$(this).prev('div.count').html(result);
 		});
 	}
 });
