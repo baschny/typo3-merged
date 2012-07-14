@@ -27,7 +27,11 @@ $issueMapping = array(
 // instead for a whole issue+branch combination.
 $ignoreList = array(
 	'TYPO3_4-5' => array(
-		'28594' => 'Backporting to 4.5 not needed, see comment in Gerrit.'
+		'28594' => 'Backporting to 4.5 not needed, see comment in Gerrit.',
+		'28616' => 'Backporting to 4.5 not desired, see comment in Gerrit.',
+		'30311' => 'IDNA converter is not in 4.5, adding would count as feature, will not be backported, see comment in Gerrit',
+		'31943' => 'Seems to not apply on 4.5, see comment in Gerrit.',
+		'32938' => 'Does not apply to 4.5, see comment in Gerrit.',
 	),
 );
 
