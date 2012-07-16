@@ -35,6 +35,8 @@ $ignoreList = array(
 		'32938' => 'Does not apply to 4.5, see comment in Gerrit.',
 		'34012' => 'Slider was introduced with 4.6 so this does not apply for 4.5, see comment in Gerrit',
 		'34396' => 'Does not apply to current 4.5.x, change is already applied, WTF?',
+		'34698' => 'Was included into another patch (#30892), applied in 09ef6f690e7b9d9cedc6c85ac0d88009697ae79a',
+		'35126' => 'Does not apply since this feature was introduced first in 4.6 (see #29586), applied in 913402a560d0778643b5dc6823619325e3eed360',
 		'35296' => 'Affects tx_form which was introduced in 4.6, does not apply to 4.5, see comment in Gerrit',
 		'36937' => 'Does not apply to 4.5, see comment in Gerrit.',
 	),
