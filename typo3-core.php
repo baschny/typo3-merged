@@ -34,10 +34,12 @@ $ignoreList = array(
 		'31943' => 'Seems to not apply on 4.5, see comment in Gerrit.',
 		'32938' => 'Does not apply to 4.5, see comment in Gerrit.',
 		'34012' => 'Slider was introduced with 4.6 so this does not apply for 4.5, see comment in Gerrit',
+		'34396' => 'Does not apply to current 4.5.x, change is already applied, WTF?',
 		'35296' => 'Affects tx_form which was introduced in 4.6, does not apply to 4.5, see comment in Gerrit',
 		'36937' => 'Does not apply to 4.5, see comment in Gerrit.',
 	),
 	'TYPO3_4-6' => array(
+		'34396' => 'Does not apply to current 4.6.x, change is already applied, WTF?',
 		'36937' => 'Does not apply to 4.6, see comment in Gerrit.',
 	),
 );
