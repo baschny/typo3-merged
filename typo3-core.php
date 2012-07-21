@@ -48,6 +48,7 @@ $projectsToCheck = array(
 				'30311' => 'IDNA converter is not in 4.5, adding would count as feature, will not be backported, see comment in Gerrit',
 				'31943' => 'Seems to not apply on 4.5, see comment in Gerrit.',
 				'32938' => 'Does not apply to 4.5, see comment in Gerrit.',
+				'33866' => 'Does not apply to 4.5 as it tries to correct code introduced into 4.6+ in #29774',
 				'34012' => 'Slider was introduced with 4.6 so this does not apply for 4.5, see comment in Gerrit',
 				'34396' => 'Does not apply to current 4.5.x, change is already applied, WTF?',
 				'34627' => 'Does not apply since IDNA converter is not in 4.5',
