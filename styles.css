@@ -19,6 +19,11 @@ a:visited {
 	color: #DB7388;
 }
 
+.info-planned a:visited {
+	color: #BE0027;
+	font-weight: inherit;
+}
+
 a:hover {
 	color: #FF8700;
 }
