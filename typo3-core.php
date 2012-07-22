@@ -46,6 +46,7 @@ $projectsToCheck = array(
 				'28616' => 'Backporting to 4.5 not desired, see comment in Gerrit.',
 				'30311' => 'IDNA converter is not in 4.5, adding would count as feature, will not be backported, see comment in Gerrit',
 				'30311' => 'IDNA converter is not in 4.5, adding would count as feature, will not be backported, see comment in Gerrit',
+				'31188' => 'Does not apply to 4.5, the code is already as it should be, WTF?',
 				'31943' => 'Seems to not apply on 4.5, see comment in Gerrit.',
 				'32938' => 'Does not apply to 4.5, see comment in Gerrit.',
 				'33866' => 'Does not apply to 4.5 as it tries to correct code introduced into 4.6+ in #29774',
