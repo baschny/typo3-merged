@@ -19,7 +19,6 @@ $issueMapping = array(
 	'#25006' => '#33853',
 );
 
-
 $projectsToCheck = array(
 	'TYPO3 CMS Core' => array(
 		'gitWebUrl' => 'http://git.typo3.org/TYPO3v4/Core.git',
@@ -47,10 +46,14 @@ $projectsToCheck = array(
 				'28616' => 'Backporting to 4.5 not desired, see comment in Gerrit.',
 				'30311' => 'IDNA converter is not in 4.5, adding would count as feature, will not be backported, see comment in Gerrit',
 				'30311' => 'IDNA converter is not in 4.5, adding would count as feature, will not be backported, see comment in Gerrit',
+				'31188' => 'Does not apply to 4.5, the code is already as it should be, WTF?',
 				'31943' => 'Seems to not apply on 4.5, see comment in Gerrit.',
 				'32938' => 'Does not apply to 4.5, see comment in Gerrit.',
+				'33866' => 'Does not apply to 4.5 as it tries to correct code introduced into 4.6+ in #29774',
+				'33895' => 'Does not apply to 4.5 as as there is no cache_phpcode in TYPO3_4-5, see comment in Gerrit',
 				'34012' => 'Slider was introduced with 4.6 so this does not apply for 4.5, see comment in Gerrit',
 				'34396' => 'Does not apply to current 4.5.x, change is already applied, WTF?',
+				'34627' => 'Does not apply since IDNA converter is not in 4.5',
 				'34698' => 'Was included into another patch (#30892), applied in 09ef6f690e7b9d9cedc6c85ac0d88009697ae79a',
 				'35126' => 'Does not apply since this feature was introduced first in 4.6 (see #29586), applied in 913402a560d0778643b5dc6823619325e3eed360',
 				'35296' => 'Affects tx_form which was introduced in 4.6, does not apply to 4.5, see comment in Gerrit',
@@ -58,6 +61,7 @@ $projectsToCheck = array(
 			),
 			'TYPO3_4-6' => array(
 				'34396' => 'Does not apply to current 4.6.x, change is already applied, WTF?',
+				'34627' => 'Does not apply since IDNA converter is not in 4.5',
 				'36937' => 'Does not apply to 4.6, see comment in Gerrit.',
 			),
 		),
