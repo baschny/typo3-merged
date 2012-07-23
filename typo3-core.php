@@ -26,7 +26,7 @@ $projectsToCheck = array(
 				# project, starting point, branch, working copy path
 			#	array('4.2', 'refs/tags/TYPO3_4-2-0', 'origin/TYPO3_4-2', 'TYPO3_4-2'),
 			#	array('4.3', 'refs/tags/TYPO3_4-3-0', 'origin/TYPO3_4-3', 'TYPO3_4-3'),
-				array('4.4', 'refs/tags/TYPO3_4-4-0', 'origin/TYPO3_4-4', 'TYPO3_4-4'),
+			#	array('4.4', 'refs/tags/TYPO3_4-4-0', 'origin/TYPO3_4-4', 'TYPO3_4-4'),
 				array('4.5', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-5', 'TYPO3_4-5'),
 			#	array('4.5-BP', 'refs/tags/TYPO3_4-5-0', 'backports/TYPO3_4-5', 'TYPO3_4-5_backports'),
 				array('4.6', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-6', 'TYPO3_4-6'),
