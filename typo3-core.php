@@ -49,6 +49,7 @@ $projectsToCheck = array(
 				'31188' => 'Does not apply to 4.5, the code is already as it should be, WTF?',
 				'31943' => 'Seems to not apply on 4.5, see comment in Gerrit.',
 				'32938' => 'Does not apply to 4.5, see comment in Gerrit.',
+				'33853' => 'Will not be backported to 4.5, see comment in Gerrit',
 				'33866' => 'Does not apply to 4.5 as it tries to correct code introduced into 4.6+ in #29774',
 				'33895' => 'Does not apply to 4.5 as as there is no cache_phpcode in TYPO3_4-5, see comment in Gerrit',
 				'34012' => 'Slider was introduced with 4.6 so this does not apply for 4.5, see comment in Gerrit',
@@ -60,6 +61,7 @@ $projectsToCheck = array(
 				'36937' => 'Does not apply to 4.5, see comment in Gerrit.',
 			),
 			'TYPO3_4-6' => array(
+				'33853' => 'Abandoned for 4.6 as it does not apply cleanly, see comment in Gerrit.',
 				'34396' => 'Does not apply to current 4.6.x, change is already applied, WTF?',
 				'34627' => 'Does not apply since IDNA converter is not in 4.5',
 				'36937' => 'Does not apply to 4.6, see comment in Gerrit.',
