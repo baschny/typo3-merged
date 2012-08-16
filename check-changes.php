@@ -177,7 +177,14 @@ foreach ($projectsToCheck as $project => $projectData) {
 				// Last line
 				foreach (explode("\n", $commitInfos['body']) as $bodyLine) {
 					$bodyInfo = explode(':', $bodyLine, 2);
-					switch (trim($bodyInfo[0])) {
+					// Fix switched Resolves / Release entries
+					$bodyInfo[0] = trim($bodyInfo[0]);
+					if ($bodyInfo[0] == 'Resolves' && preg_match('/^\s*\d\.\d$/', $bodyInfo[1])) {
+						$bodyInfo[0] = 'Releases';
+					} elseif ($bodyInfo[0] == 'Releases' && preg_match('/^\s*#\d+$/', $bodyInfo[1])) {
+						$bodyInfo[0] = 'Resolves';
+					}
+					switch ($bodyInfo[0]) {
 						case 'Resolves':
 						case 'Fixes':
 							$issues = explode(',', $bodyInfo[1]);
