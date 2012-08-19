@@ -8,6 +8,7 @@ $htmlFile = 'core.html';
 $reviewLinkPattern = "https://review.typo3.org/#/q/tr:%s,n,z";
 
 $issueMapping = array(
+	'#M16726' => '#24324',
 	'#M17868' => '#25258',
 	'#M17924' => '#25305',
 	'#M18051' => '#25406',
