@@ -186,12 +186,17 @@ foreach ($projectsToCheck as $project => $projectData) {
 					}
 					switch ($bodyInfo[0]) {
 						case 'Resolves':
+						case 'Resolve':
 						case 'Fixes':
+						case 'Fixs':
 							$issues = explode(',', $bodyInfo[1]);
 							foreach ($issues as $issue) {
 								$issue = trim($issue);
 								// Only use the numbers after the "#" (in case of buggy lines)
 								$issue = preg_replace('/^(#[0-9]+).*$/', '$1', $issue);
+								if (intval($issue)) {
+									$issue = '#' . $issue;
+								}
 								if (isset($issueMapping[$issue])) {
 									$issue = $issueMapping[$issue];
 								}

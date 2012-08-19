@@ -70,16 +70,12 @@ $projectsToCheck = array(
 				'34396' => 'Does not apply to current 4.6.x, change is already applied, WTF?',
 				'34627' => 'Does not apply since IDNA converter is not in 4.5',
 				'36937' => 'Does not apply to 4.6, see comment in Gerrit.',
-				'24324' => 'Already applied to master in 7ac39b25fa7b570bd92438da4f5681ebcebac173',
-				'28820' => 'Was included with a wrong "Commit message". Applied in 62ad7332b142751d97505da409729ae6eb8395f3',
 			),
 			'TYPO3_4-7' => array(
 				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
 			),
 			'master' => array(
-				'38300' => 'Was included with a wrong "Commit message". Applied in 51d51c61550ea0179434bdcd7bdc2fafa90267d1',
 				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
-				'34567' => 'Was included with a wrong "Commit message". Applied in 8904589dd46ea724fef009ed75a29abf0fb3b53e',
 			),
 		),
 	),
