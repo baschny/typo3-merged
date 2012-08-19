@@ -64,15 +64,22 @@ $projectsToCheck = array(
 				'35126' => 'Does not apply since this feature was introduced first in 4.6 (see #29586), applied in 913402a560d0778643b5dc6823619325e3eed360',
 				'35296' => 'Affects tx_form which was introduced in 4.6, does not apply to 4.5, see comment in Gerrit',
 				'36937' => 'Does not apply to 4.5, see comment in Gerrit.',
+				'32109' => 'Does not apply to 4.5, see comment in Gerrit',
 			),
 			'TYPO3_4-6' => array(
 				'33853' => 'Abandoned for 4.6 as it does not apply cleanly, see comment in Gerrit.',
 				'34396' => 'Does not apply to current 4.6.x, change is already applied, WTF?',
 				'34627' => 'Does not apply since IDNA converter is not in 4.5',
 				'36937' => 'Does not apply to 4.6, see comment in Gerrit.',
+				'33165' => 'No change needed here, as authUser is only called when a login is triggered',
+				'34601' => 'Does not apply, hook does not exists in 4.6',
+				'33234' => 'Abandoned for 4.6, see comment in Gerrit.',
 			),
 			'TYPO3_4-7' => array(
 				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
+				'10307' => 'Cannot go to 4.7 anymore.',
+				'33749' => 'This feature is postponed to 6.0.',
+				'34363' => 'Feature was too late to be merged in 4.7, merged in 6.0',
 			),
 			'master' => array(
 				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
