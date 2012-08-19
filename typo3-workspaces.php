@@ -32,6 +32,15 @@ $projectsToCheck = array(
 			array('4.7', 'refs/tags/4.5.0', 'origin/workspaces_4-7', 'workspaces/4.7'),
 			array('6.0', 'refs/tags/4.5.0', 'origin/master', 'workspaces/master'),
 		),
+		'ignoreList' => array(
+			'4.5' => array(
+				'32476' => 'Abandoned for 4.5, it is a feature of 4.7',
+				'26287' => 'Is a feature for 4.6 and newer.',
+			),
+			'4.6' => array(
+				'32476' => 'Abandoned for 4.6, it is a feature of 4.7',
+			),
+		),
 	),
 );
 
