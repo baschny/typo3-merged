@@ -187,6 +187,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 					switch ($bodyInfo[0]) {
 						case 'Resolves':
 						case 'Fixes':
+						case 'Fixs':
 							$issues = explode(',', $bodyInfo[1]);
 							foreach ($issues as $issue) {
 								$issue = trim($issue);
