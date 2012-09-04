@@ -65,6 +65,7 @@ $projectsToCheck = array(
 				'35296' => 'Affects tx_form which was introduced in 4.6, does not apply to 4.5, see comment in Gerrit',
 				'36937' => 'Does not apply to 4.5, see comment in Gerrit.',
 				'32109' => 'Does not apply to 4.5, see comment in Gerrit',
+				'35787' => 'tx_form was not part of 4.5, see comment in Gerrit',
 			),
 			'TYPO3_4-6' => array(
 				'33853' => 'Abandoned for 4.6 as it does not apply cleanly, see comment in Gerrit.',
