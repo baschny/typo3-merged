@@ -53,6 +53,7 @@ $(document).ready(function(){
 	updateCount();
 
 	// read the cookie and restore the last filter
+	// if the cookie is not set, we activate the "hide done" filter by default
 	if ($.cookie('lastActiveFilter') != null) {
 		splitAtPosition = $.cookie('lastActiveFilter').indexOf('%');
 		product = $.cookie('lastActiveFilter').substring(0, splitAtPosition);
@@ -63,6 +64,8 @@ $(document).ready(function(){
 				$(this).next().find('.' + branch).click();
 			}
 		});
+	} else {
+		$('.hideResolved').click();
 	}
 
 
