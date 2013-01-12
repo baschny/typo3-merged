@@ -20,9 +20,26 @@ $projectsToCheck = array(
 			array('1.3', 'refs/tags/1.3.0', 'origin/extbase_1-3', 'extbase/extbase_1-3'),
 			array('1.4', 'refs/tags/1.3.0', 'origin/extbase_1-4', 'extbase/extbase_1-4'),
 			array('4.7', 'refs/tags/1.3.0', 'origin/extbase_4-7', 'extbase/extbase_4-7'),
-			array('6.0', 'refs/tags/1.3.0', 'origin/master', 'extbase/master'),
+			array('6.0', 'refs/tags/1.3.0', 'origin/extbase_6-0', 'extbase/extbase_6-0'),
+			array('6.1', 'refs/tags/1.3.0', 'origin/master', 'extbase/master'),
 		),
 		'mapBranchReleaseFunction' => 'mapBranchReleaseExtbase',
+		'ignoreList' => array(
+			'extbase_1-3' => array(
+		 		'42195' => 'Decided to not backport this to older branches',
+		 		'36008' => 'Decided to not backport'
+			),
+			'extbase_1-4' => array(
+		 		'42195' => 'Decided to not backport this to older branches',
+		 		'36008' => 'Decided to not backport'
+			),
+			'extbase_4-7' => array(
+		 		'42195' => 'Decided to not backport this to older branches'
+			),
+			'extbase_6-0' => array(
+				'6944' => 'Feature only merged for 6.1'
+			),
+		),
 	),
 	'TYPO3 Fluid' => array(
 		'gitWebUrl' => 'http://git.typo3.org/TYPO3v4/CoreProjects/MVC/fluid.git',
@@ -31,7 +48,8 @@ $projectsToCheck = array(
 			array('1.3', 'refs/tags/1.3.0', 'origin/fluid_1-3', 'fluid/fluid_1-3'),
 			array('1.4', 'refs/tags/1.3.0', 'origin/fluid_1-4', 'fluid/fluid_1-4'),
 			array('4.7', 'refs/tags/1.3.0', 'origin/fluid_4-7', 'fluid/fluid_4-7'),
-			array('6.0', 'refs/tags/1.3.0', 'origin/master', 'fluid/master'),
+			array('6.0', 'refs/tags/1.3.0', 'origin/fluid_6-0', 'fluid/fluid_6-0'),
+			array('6.1', 'refs/tags/1.3.0', 'origin/master', 'fluid/master'),
 		),
 		'mapBranchReleaseFunction' => 'mapBranchReleaseExtbase',
 	),
