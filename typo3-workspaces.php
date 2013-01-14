@@ -19,8 +19,9 @@ $projectsToCheck = array(
 			# project, starting point, branch, working copy path
 			array('4.5', 'refs/tags/4.5.0', 'origin/4.5', 'version/4.5'),
 			array('4.6', 'refs/tags/4.5.0', 'origin/4.6', 'version/4.6'),
-			array('4.7', 'refs/tags/4.5.0', 'origin/version_4-7', 'version/4.7'),
-			array('6.0', 'refs/tags/4.5.0', 'origin/master', 'version/master'),
+			array('4.7', 'refs/tags/4.5.0', 'origin/version_4-7', 'version/version_4-7'),
+			array('6.0', 'refs/tags/4.5.0', 'origin/version_6-0', 'version/version_6-0'),
+			array('6.1', 'refs/tags/4.5.0', 'origin/master', 'version/master'),
 		),
 	),
 	'TYPO3 Workspaces' => array(
@@ -29,8 +30,9 @@ $projectsToCheck = array(
 			# project, starting point, branch, working copy path
 			array('4.5', 'refs/tags/4.5.0', 'origin/4.5', 'workspaces/4.5'),
 			array('4.6', 'refs/tags/4.5.0', 'origin/4.6', 'workspaces/4.6'),
-			array('4.7', 'refs/tags/4.5.0', 'origin/workspaces_4-7', 'workspaces/4.7'),
-			array('6.0', 'refs/tags/4.5.0', 'origin/master', 'workspaces/master'),
+			array('4.7', 'refs/tags/4.5.0', 'origin/workspaces_4-7', 'workspaces/workspaces_4-7'),
+			array('6.0', 'refs/tags/4.5.0', 'origin/workspaces_6-0', 'workspaces/workspaces_6-0'),
+			array('6.1', 'refs/tags/4.5.0', 'origin/master', 'workspaces/master'),
 		),
 		'ignoreList' => array(
 			'4.5' => array(

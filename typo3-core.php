@@ -33,7 +33,8 @@ $projectsToCheck = array(
 				array('4.6', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-6', 'TYPO3_4-6'),
 			#	array('4.6-BP', 'refs/tags/TYPO3_4-5-0', 'backports/TYPO3_4-6', 'TYPO3_4-6_backports'),
 				array('4.7', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-7', 'TYPO3_4-7'),
-				array('6.0', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'TYPO3_6-0'),
+				array('6.0', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-0', 'TYPO3_6-0'),
+				array('6.1', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'TYPO3_6-1'),
 		),
 		// list of issues to be ignored as TODOs from a certain branch.
 		// Used to shorten the list of issues that are marked "TODO"
@@ -82,7 +83,7 @@ $projectsToCheck = array(
 				'33749' => 'This feature is postponed to 6.0.',
 				'34363' => 'Feature was too late to be merged in 4.7, merged in 6.0',
 			),
-			'master' => array(
+			'TYPO3_6-0' => array(
 				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
 			),
 		),

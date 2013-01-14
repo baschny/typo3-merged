@@ -19,7 +19,8 @@ $projectsToCheck = array(
 			array('4.5', 'refs/tags/4.5', 'origin/TYPO3_4-5', 'linkvalidator/TYPO3_4-5'),
 			array('4.6', 'refs/tags/4.5', 'origin/TYPO3_4-6', 'linkvalidator/TYPO3_4-6'),
 			array('4.7', 'refs/tags/4.5', 'origin/linkvalidator_4-7', 'linkvalidator/linkvalidator_4-7'),
-			array('6.0', 'refs/tags/4.5', 'origin/master', 'linkvalidator/master'),
+			array('6.0', 'refs/tags/4.5', 'origin/linkvalidator_6-0', 'linkvalidator/linkvalidator_6-0'),
+			array('6.1', 'refs/tags/4.5', 'origin/master', 'linkvalidator/master'),
 		),
 	),
 );
