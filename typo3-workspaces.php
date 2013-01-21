@@ -23,6 +23,17 @@ $projectsToCheck = array(
 			array('6.0', 'refs/tags/4.5.0', 'origin/version_6-0', 'version/version_6-0'),
 			array('6.1', 'refs/tags/4.5.0', 'origin/master', 'version/master'),
 		),
+		'ignoreList' => array(
+			'4.5' => array(
+				'43088' => 'Is already merged with #25434',
+			),
+			'4.6' => array(
+				'43088' => 'Is already merged with #25434',
+			),
+			'version_6-0' => array(
+				'43088' => 'Is already merged with #25434',
+			),
+		),
 	),
 	'TYPO3 Workspaces' => array(
 		'gitWebUrl' => 'http://git.typo3.org/TYPO3v4/CoreProjects/workspaces/workspaces.git',
