@@ -27,7 +27,8 @@ $projectsToCheck = array(
 		'ignoreList' => array(
 			'extbase_1-3' => array(
 		 		'42195' => 'Decided to not backport this to older branches',
-		 		'36008' => 'Decided to not backport'
+		 		'36008' => 'Decided to not backport',
+		 		'35791' => 'The unit-tests are not available in 4.5'
 			),
 			'extbase_1-4' => array(
 		 		'42195' => 'Decided to not backport this to older branches',
