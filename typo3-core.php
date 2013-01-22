@@ -67,6 +67,7 @@ $projectsToCheck = array(
 				'36937' => 'Does not apply to 4.5, see comment in Gerrit.',
 				'32109' => 'Does not apply to 4.5, see comment in Gerrit',
 				'35787' => 'tx_form was not part of 4.5, see comment in Gerrit',
+				'39662' => 'Stanislas Rolland: The issue does not arise in releases 4.6 and 4.5.',
 			),
 			'TYPO3_4-6' => array(
 				'33853' => 'Abandoned for 4.6 as it does not apply cleanly, see comment in Gerrit.',
@@ -76,6 +77,7 @@ $projectsToCheck = array(
 				'33165' => 'No change needed here, as authUser is only called when a login is triggered',
 				'34601' => 'Does not apply, hook does not exists in 4.6',
 				'33234' => 'Abandoned for 4.6, see comment in Gerrit.',
+				'39662' => 'Stanislas Rolland: The issue does not arise in releases 4.6 and 4.5.',
 			),
 			'TYPO3_4-7' => array(
 				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
