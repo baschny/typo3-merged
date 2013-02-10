@@ -28,17 +28,20 @@ $projectsToCheck = array(
 			'extbase_1-3' => array(
 		 		'42195' => 'Decided to not backport this to older branches',
 		 		'36008' => 'Decided to not backport',
-		 		'35791' => 'The unit-tests are not available in 4.5'
+		 		'35791' => 'The unit-tests are not available in 4.5',
+		 		'39876' => 'Discussed in the team to remove this one in'
 			),
 			'extbase_1-4' => array(
 		 		'42195' => 'Decided to not backport this to older branches',
-		 		'36008' => 'Decided to not backport'
+		 		'36008' => 'Decided to not backport',
+		 		'39876' => 'Discussed in the team to remove this one in'
 			),
 			'extbase_4-7' => array(
 		 		'42195' => 'Decided to not backport this to older branches'
 			),
 			'extbase_6-0' => array(
-				'6944' => 'Feature only merged for 6.1'
+				'6944' => 'Feature only merged for 6.1',
+				'44806' => 'Not needed in 6.0, because of a small merging mistake in 6.1'
 			),
 		),
 	),
