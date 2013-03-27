@@ -338,7 +338,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 				} else if (isset($issueData['solved'][$releaseBranch]) && !isset($issueData['solved'][$originalBranch])) {
 					// merged only in the backports branch: This is a backport!!!
 					$class = 'info-solved';
-					$text = sprintf('<a title="Merged only on backports of %s (%s)" target="_blank" href="%s?a=commit;h=%s" target="_blank">BACKPORT</a>',
+					$text = sprintf('<a title="Merged only on backports of %s (%s)" target="_blank" href="%s/commit/%s" target="_blank">BACKPORT</a>',
 						$matches[1],
 						$issueData['solved'][$releaseBranch]['date'],
 						$projectData['gitWebUrl'],
@@ -346,7 +346,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 					);
 				} elseif (isset($issueData['solved'][$originalBranch]) && !isset($issueData['solved'][$releaseBranch])) {
 					// merged only in the original branch: needs to cherry-pick still
-					$text = sprintf('<a title="Merged only on origin of %s (%s), needs cherry-pick" target="_blank" href="%s?a=commit;h=%s" target="_blank">TODO</a>',
+					$text = sprintf('<a title="Merged only on origin of %s (%s), needs cherry-pick" target="_blank" href="%s/commit/%s" target="_blank">TODO</a>',
 						$matches[1],
 						$issueData['solved'][$originalBranch]['date'],
 						$projectData['gitWebUrl'],
@@ -377,7 +377,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 						$versionTag = 'previous';
 					}
 					$releaseName = $issueData['solved'][$releaseBranch]['inRelease'];
-					$text = sprintf('<a title="Merged on %s %s" target="_blank" href="%s?a=commit;h=%s" target="_blank">%s</a>',
+					$text = sprintf('<a title="Merged on %s %s" target="_blank" href="%s/commit/%s" target="_blank">%s</a>',
 						$issueData['solved'][$releaseBranch]['date'],
 						$versionName,
 						$projectData['gitWebUrl'],
@@ -409,7 +409,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 
 	$out .= '<p>Based on these GIT states:</p><ul>';
 	foreach ($lastHash as $release => $hash) {
-		$out .= sprintf('<li>%s: <a target="_blank" href="%s?a=commit;h=%s" target="_blank">%s</a>', $release, $projectData['gitWebUrl'], $hash, $hash);
+		$out .= sprintf('<li>%s: <a target="_blank" href="%s/commit/%s" target="_blank">%s</a>', $release, $projectData['gitWebUrl'], $hash, $hash);
 	}
 	$out .= '</ul>';
 
