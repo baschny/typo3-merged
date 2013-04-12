@@ -41,6 +41,7 @@ $projectsToCheck = array(
 			),
 			'extbase_6-0' => array(
 				'6944' => 'Feature only merged for 6.1',
+				'43928' => 'Not needed in 6.0, because shouldMap() always returns TRUE',
 				'44806' => 'Not needed in 6.0, because of a small merging mistake in 6.1'
 			),
 		),
