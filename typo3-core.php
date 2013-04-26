@@ -29,12 +29,11 @@ $projectsToCheck = array(
 			#	array('4.3', 'refs/tags/TYPO3_4-3-0', 'origin/TYPO3_4-3', 'TYPO3_4-3'),
 			#	array('4.4', 'refs/tags/TYPO3_4-4-0', 'origin/TYPO3_4-4', 'TYPO3_4-4'),
 				array('4.5', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-5', 'TYPO3_4-5'),
-			#	array('4.5-BP', 'refs/tags/TYPO3_4-5-0', 'backports/TYPO3_4-5', 'TYPO3_4-5_backports'),
-				array('4.6', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-6', 'TYPO3_4-6'),
-			#	array('4.6-BP', 'refs/tags/TYPO3_4-5-0', 'backports/TYPO3_4-6', 'TYPO3_4-6_backports'),
+			#	array('4.6', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-6', 'TYPO3_4-6'),
 				array('4.7', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-7', 'TYPO3_4-7'),
 				array('6.0', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-0', 'TYPO3_6-0'),
-				array('6.1', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'TYPO3_6-1'),
+				array('6.1', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-1', 'TYPO3_6-1'),
+				array('6.2', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'TYPO3_6-2'),
 		),
 		// list of issues to be ignored as TODOs from a certain branch.
 		// Used to shorten the list of issues that are marked "TODO"
