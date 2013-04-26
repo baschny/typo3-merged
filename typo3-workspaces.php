@@ -18,16 +18,13 @@ $projectsToCheck = array(
 		'releases' => array(
 			# project, starting point, branch, working copy path
 			array('4.5', 'refs/tags/4.5.0', 'origin/4.5', 'version/4.5'),
-			array('4.6', 'refs/tags/4.5.0', 'origin/4.6', 'version/4.6'),
 			array('4.7', 'refs/tags/4.5.0', 'origin/version_4-7', 'version/version_4-7'),
 			array('6.0', 'refs/tags/4.5.0', 'origin/version_6-0', 'version/version_6-0'),
-			array('6.1', 'refs/tags/4.5.0', 'origin/master', 'version/master'),
+			array('6.1', 'refs/tags/4.5.0', 'origin/version_6-1', 'version/version_6-1'),
+			array('6.2', 'refs/tags/4.5.0', 'origin/master', 'version/master'),
 		),
 		'ignoreList' => array(
 			'4.5' => array(
-				'43088' => 'Is already merged with #25434',
-			),
-			'4.6' => array(
 				'43088' => 'Is already merged with #25434',
 			),
 			'version_6-0' => array(
@@ -40,18 +37,15 @@ $projectsToCheck = array(
 		'releases' => array(
 			# project, starting point, branch, working copy path
 			array('4.5', 'refs/tags/4.5.0', 'origin/4.5', 'workspaces/4.5'),
-			array('4.6', 'refs/tags/4.5.0', 'origin/4.6', 'workspaces/4.6'),
 			array('4.7', 'refs/tags/4.5.0', 'origin/workspaces_4-7', 'workspaces/workspaces_4-7'),
 			array('6.0', 'refs/tags/4.5.0', 'origin/workspaces_6-0', 'workspaces/workspaces_6-0'),
-			array('6.1', 'refs/tags/4.5.0', 'origin/master', 'workspaces/master'),
+			array('6.1', 'refs/tags/4.5.0', 'origin/workspaces_6-1', 'workspaces/workspaces_6-1'),
+			array('6.2', 'refs/tags/4.5.0', 'origin/master', 'workspaces/master'),
 		),
 		'ignoreList' => array(
 			'4.5' => array(
 				'32476' => 'Abandoned for 4.5, it is a feature of 4.7',
 				'26287' => 'Is a feature for 4.6 and newer.',
-			),
-			'4.6' => array(
-				'32476' => 'Abandoned for 4.6, it is a feature of 4.7',
 			),
 		),
 	),
