@@ -44,6 +44,7 @@ $projectsToCheck = array(
 		'ignoreList' => array(
 			'TYPO3_4-5' => array(
 				'12664' => 'Abandoned for 4.5, it is a feature of 4.6',
+				'21481' => 'This is already merged to 6.x versions. Only major changes go to 4.x, so 4.x is not getting this.',
 				'28344' => 'Abandoned for 4.5, it is a feature of 4.6',
 				'28523' => 'Abandoned for 4.5, it is a feature of 4.6',
 				'28568' => 'Abandoned for 4.5, it is a feature of 4.6',
