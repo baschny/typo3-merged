@@ -32,12 +32,14 @@ $projectsToCheck = array(
 		 		'39876' => 'Discussed in the team to remove this one in'
 			),
 			'extbase_4-7' => array(
-		 		'42195' => 'Decided to not backport this to older branches'
+		 		'42195' => 'Decided to not backport this to older branches',
+		 		'46042' => 'Decided to not backport this to 4.7'
 			),
 			'extbase_6-0' => array(
 				'6944' => 'Feature only merged for 6.1',
 				'43928' => 'Not needed in 6.0, because shouldMap() always returns TRUE',
-				'44806' => 'Not needed in 6.0, because of a small merging mistake in 6.1'
+				'44806' => 'Not needed in 6.0, because of a small merging mistake in 6.1',
+				'42724' => 'Merged under another ticket for 6.0'
 			),
 		),
 	),
