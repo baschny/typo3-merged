@@ -41,7 +41,7 @@ if (isset($argv[1]) && file_exists($argv[1])) {
 // %s = GIT_DIR
 // %s = 4-5-0 (first release)
 // %s = 4-5 (current state)
-$cmdGitLog = 'GIT_DIR="%s" git log %s..%s --submodule --pretty=format:hash:%%h%%x01date:%%cd%%x01tags:%%d%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
+$cmdGitLog = 'GIT_DIR="%s" git log %s..%s --submodule --pretty=format:hash:%%h%%x01hashfull:%%H%%x01date:%%cd%%x01tags:%%d%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
 // Requires that ssh is allowed to gerrit (private key)
 $cmdGerrit = 'ssh review.typo3.org -p 29418 gerrit query --format json status:open project:%s';
@@ -133,6 +133,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 	$releasesToCheck = $projectData['releases'];
 	echo 'Working on ' . $project . ' now.' . PHP_EOL;
 	$gerritIssues = array();
+	$revertedCommits = array();
 	$urlParts = parse_url($projectData['gitWebUrl']);
 	$gerritProject = ltrim(substr($urlParts['path'], 0, -4), '/');
 	$gerritIssues = fetchGerritReviewRequests($gerritProject);
@@ -175,7 +176,11 @@ foreach ($projectsToCheck as $project => $projectData) {
 		foreach ($output as $line) {
 			if ($line === '--COMMIT--') {
 				// Last line
+				$revertCommit = FALSE;
 				foreach (explode("\n", $commitInfos['body']) as $bodyLine) {
+					if (preg_match('/This reverts commit (\w+)/', $bodyLine, $match)) {
+						$revertCommit = $match[1];
+					}
 					$bodyInfo = explode(':', $bodyLine, 2);
 					// Fix switched Resolves / Release entries
 					$bodyInfo[0] = trim($bodyInfo[0]);
@@ -228,7 +233,16 @@ foreach ($projectsToCheck as $project => $projectData) {
 					$inRelease = $releaseCommit;
 				}
 				$commitInfos['inRelease'] = ( $inRelease ? $inRelease : 'next' );
+				$commitInfos['reverted'] = FALSE;
+				if (isset($revertedCommits[$commitInfos['hashfull']])) {
+					// This commit was reverted, keep a pointer to the reversal
+					$commitInfos['reverted'] = $revertedCommits[$commitInfos['hashfull']];
+				}
 				$commits[$branch][] = $commitInfos;
+				if ($revertCommit != '') {
+					// Remember this commit which revertes some commit that is yet to come
+					$revertedCommits[$revertCommit] = $commitInfos;
+				}
 				$commitInfos = array();
 				continue;
 			}
@@ -268,6 +282,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 					'hash' => $commit['hash'],
 					'subject' => $commit['subject'],
 					'inRelease' => $commit['inRelease'],
+					'reverted' => $commit['reverted'],
 				);
 				if (isset($commit['releases'])) {
 					foreach ($commit['releases'] as $release) {
@@ -384,6 +399,28 @@ foreach ($projectsToCheck as $project => $projectData) {
 						$issueData['solved'][$releaseBranch]['hash'],
 						$versionTag
 					);
+					// Solved but later reverted?
+					if (is_array($issueData['solved'][$releaseBranch]['reverted'])) {
+						$class .= ' info-reverted';
+						$revertedInfos = $issueData['solved'][$releaseBranch]['reverted'];
+						if ($revertedInfos['inRelease'] == 'next') {
+							$versionName = 'for next release';
+							$versionTag = 'next';
+						} else if (preg_match('/^' . $releaseName . '/', $revertedInfos['inRelease'])) {
+							$versionName = 'for ' . $revertedInfos['inRelease'];
+							$versionTag = $revertedInfos['inRelease'];
+						} else {
+							$versionName = sprintf('in previous release (%s)', $revertedInfos['inRelease']);
+							$versionTag = 'previous';
+						}
+						$text .= '<br/>Rev:&nbsp;' . sprintf('<a title="Reverted on %s %s" target="_blank" href="%s/commit/%s" target="_blank">%s</a>',
+							$revertedInfos['date'],
+							$versionName,
+							$projectData['gitWebUrl'],
+							$revertedInfos['hash'],
+							$versionTag
+						);
+					}
 				} elseif (isset($issueData['planned']) && isset($issueData['planned'][$releaseName])) {
 					if (isset($gerritIssues[$branchName][$topic])) {
 						$class = 'info-planned info-planned-review';

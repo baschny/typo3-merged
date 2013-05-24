@@ -96,12 +96,16 @@ th {
 td.info-planned,
 td.info-solved,
 td.info-not-needed {
-	text-align: center;
+	text-align: left;
+	padding-left: 10px;
 }
 td.info-planned {
 	font-weight:bold;
 	color: white;
 	background-color: red;
+}
+td.info-reverted {
+	background-color: #d7d7d7;
 }
 td.info-planned-review {
 	color: black;
