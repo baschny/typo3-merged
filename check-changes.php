@@ -391,7 +391,6 @@ foreach ($projectsToCheck as $project => $projectData) {
 						$versionName = sprintf('in previous release (%s)', $issueData['solved'][$releaseBranch]['inRelease']);
 						$versionTag = 'previous';
 					}
-					$releaseName = $issueData['solved'][$releaseBranch]['inRelease'];
 					$text = sprintf('<a title="Merged on %s %s" target="_blank" href="%s/commit/%s" target="_blank">%s</a>',
 						$issueData['solved'][$releaseBranch]['date'],
 						$versionName,
