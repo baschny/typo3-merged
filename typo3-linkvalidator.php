@@ -32,7 +32,7 @@ $projectsToCheck = array(
  * @return mixed FALSE|string The released version name
  */
 function getDetectedReleaseCommitCallback($commitInfos) {
-	if (preg_match('/TYPO3_([0-9-]{5}(?:-(alpha|beta|rc)[0-9]+)?)/', $commitInfos['tags'], $matches)) {
+	if (preg_match('/TYPO3_([0-9-]{5}(?:-?(alpha|beta|rc)[0-9]+)?)/', $commitInfos['tags'], $matches)) {
 		return $matches[1];
 	}
 	return NULL;
