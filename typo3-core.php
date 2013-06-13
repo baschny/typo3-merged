@@ -78,6 +78,14 @@ $projectsToCheck = array(
 				'31184' => 'Does not apply to 4.5, no popup windows used in EM of 4.5',
 				'26141' => 'Stanislas Rolland: The issue does not arise in releases 4.7 and 4.5.',
 				'28794' => 'Does not apply to 4.5, Bug was introduced with accessibility refactoring',
+				'43735' => 'Will not be backported to 4.5, see comment in Gerrit',
+				'32476' => 'Abandoned for 4.5, it is a feature of 4.7',
+				'26287' => 'Is a feature for 4.6 and newer.',
+				'43088' => 'Is already merged with #25434',
+		 		'42195' => 'Decided to not backport this to older branches',
+		 		'36008' => 'Decided to not backport',
+		 		'35791' => 'The unit-tests are not available in 4.5',
+		 		'39876' => 'Discussed in the team to remove this one in'
 			),
 			'TYPO3_4-6' => array(
 				'25100' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
@@ -113,10 +121,18 @@ $projectsToCheck = array(
 				'33749' => 'This feature is postponed to 6.0.',
 				'34363' => 'Feature was too late to be merged in 4.7, merged in 6.0',
 				'26141' => 'Stanislas Rolland: The issue does not arise in releases 4.7 and 4.5.',
+				'43735' => 'Will not be backported to 4.7, see comment in Gerrit',
+		 		'42195' => 'Decided to not backport this to older branches',
+		 		'46042' => 'Decided to not backport this to 4.7'
 			),
 			'TYPO3_6-0' => array(
 				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
 				'43184' => 'Benni Mack: This won\'t work in 6.0',
+				'43088' => 'Is already merged with #25434',
+				'6944' => 'Feature only merged for 6.1',
+				'43928' => 'Not needed in 6.0, because shouldMap() always returns TRUE',
+				'44806' => 'Not needed in 6.0, because of a small merging mistake in 6.1',
+				'42724' => 'Merged under another ticket for 6.0'
 			),
 		),
 	),
