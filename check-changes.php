@@ -334,6 +334,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$subject = '';
 		foreach ($releasesToCheck as $release) {
 			$releaseName = str_replace('-BP', '', $release[0]);
+			if (isset($projectData['mapBranchReleaseFunction'])) {
+				$releaseName = $projectData['mapBranchReleaseFunction']($releaseName);
+			}
 			// e.g. origin/TYPO3_4-5:
 			$releaseBranch = $release[2];
 			// e.g. TYPO3_4-5:
@@ -378,9 +381,6 @@ foreach ($projectsToCheck as $project => $projectData) {
 			} else {
 				if (isset($issueData['solved'][$releaseBranch])) {
 					$class = 'info-solved';
-					if (isset($projectData['mapBranchReleaseFunction'])) {
-						$releaseName = $projectData['mapBranchReleaseFunction']($releaseName);
-					}
 					if ($issueData['solved'][$releaseBranch]['inRelease'] == 'next') {
 						$versionName = 'for next release';
 						$versionTag = 'next';
