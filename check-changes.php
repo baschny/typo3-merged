@@ -413,7 +413,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 							$versionName = sprintf('in previous release (%s)', $revertedInfos['inRelease']);
 							$versionTag = 'previous';
 						}
-						$text .= '<br/>Rev:&nbsp;' . sprintf('<a title="Reverted on %s %s" target="_blank" href="%s/commit/%s" target="_blank">%s</a>',
+						$text .= '<br/>' . sprintf('<a title="Reverted on %s %s" target="_blank" href="%s/commit/%s" target="_blank">%s</a> (<abbr title="Reverted commit">rev</abbr>)',
 							$revertedInfos['date'],
 							$versionName,
 							$projectData['gitWebUrl'],

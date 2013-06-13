@@ -98,6 +98,7 @@ td.info-solved,
 td.info-not-needed {
 	text-align: left;
 	padding-left: 10px;
+	white-space: nowrap;
 }
 td.info-planned {
 	font-weight:bold;
