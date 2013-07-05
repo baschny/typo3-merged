@@ -121,6 +121,7 @@ $projectsToCheck = array(
 				'33749' => 'This feature is postponed to 6.0.',
 				'34363' => 'Feature was too late to be merged in 4.7, merged in 6.0',
 				'26141' => 'Stanislas Rolland: The issue does not arise in releases 4.7 and 4.5.',
+				'41344' => 'Decided to not be backported to 4.7',
 				'43735' => 'Will not be backported to 4.7, see comment in Gerrit',
 		 		'42195' => 'Decided to not backport this to older branches',
 		 		'46042' => 'Decided to not backport this to 4.7'
