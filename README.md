@@ -31,11 +31,11 @@ For speed improvements, we're keeping a full clone for each branch at
 
 	mkdir /www/shared/TYPO3core
 	cd /www/shared/TYPO3core/
-	git clone git://git.typo3.org/TYPO3v4/Core.git TYPO3_6-0
-	git clone git://git.typo3.org/TYPO3v4/Core.git TYPO3_4-7
-	git clone git://git.typo3.org/TYPO3v4/Core.git TYPO3_4-6
-	git clone git://git.typo3.org/TYPO3v4/Core.git TYPO3_4-5
-	git clone git://git.typo3.org/TYPO3v4/Core.git TYPO3_4-4
+	git clone git://git.typo3.org/Packages/TYPO3.CMS.git TYPO3_6-2
+	git clone git://git.typo3.org/Packages/TYPO3.CMS.git TYPO3_6-1
+	git clone git://git.typo3.org/Packages/TYPO3.CMS.git TYPO3_6-0
+	git clone git://git.typo3.org/Packages/TYPO3.CMS.git TYPO3_4-7
+	git clone git://git.typo3.org/Packages/TYPO3.CMS.git TYPO3_4-5
 
 Gerrit access
 -------------
