@@ -126,6 +126,21 @@ function compareIssues($a, $b) {
 	return ($a > $b) ? -1 : 1;
 }
 
+function branchToRelease($projectName, $branchName) {
+	global $projectsToCheck, $releasesToCheck;
+	static $releaseMapping = array();
+	if (empty($releaseMapping)) {
+		foreach ($projectsToCheck as $project => $projectData) {
+			foreach ($releasesToCheck as $releaseRange) {
+				$release = $releaseRange[0];
+				$branch = $releaseRange[2];
+				$releaseMapping[$project][$branch] = $release;
+			}
+		}
+	}
+	return $releaseMapping[$projectName][$branchName];
+}
+
 $out = '<html><head><title>Merged issues in releases</title><link rel="stylesheet" type="text/css" href="styles.css" /></head>';
 $out .= "<body>\n";
 $out .= "<h1>Issues merged into releases</h1>\n";
@@ -133,6 +148,7 @@ $out .= "<h1>Issues merged into releases</h1>\n";
 foreach ($projectsToCheck as $project => $projectData) {
 	$commits = array();
 	$lastHash = array();
+	$uniqueNewFeatures = array();
 	$releasesToCheck = $projectData['releases'];
 	echo 'Working on ' . $project . ' now.' . PHP_EOL;
 	$gerritIssues = array();
@@ -326,6 +342,14 @@ foreach ($projectsToCheck as $project => $projectData) {
 	$out .= "</tr>";
 
 	foreach ($issueInfo as $issueNumber => $issueData) {
+		$subject = 'Unknown';
+		foreach ($releasesToCheck as $release) {
+			$releaseBranch = $release[2];
+			if (isset($issueData['solved'][$releaseBranch])) {
+				$subject = $issueData['solved'][$releaseBranch]['subject'];
+				break;
+			}
+		}
 		$out .= "<tr>";
 		$issueLink = '';
 		$reviewLink = '';
@@ -338,7 +362,30 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$topic = substr($issueNumber, 1);
 		$issueNumber = sprintf('<a href="%s" target="_blank">%s</a>', $issueLink, $issueNumber);
 		$out .= sprintf('<td class="issue">%s</td>', $issueNumber);
-		$subject = '';
+
+		// Find out unique target releases (for new features):
+		$targetReleases = array();
+		if ($issueData['planned']) {
+			foreach ($issueData['planned'] as $plannedRelease => $dummy) {
+				if (!isset($projectData['ignoreList'][$plannedRelease][$topic])) {
+					$targetReleases[$plannedRelease] = TRUE;
+				}
+			}
+		}
+		if ($issueData['solved']) {
+			foreach ($issueData['solved'] as $solvedReleaseBranch => $solvedData) {
+				$solvedRelease = branchToRelease($project, $solvedReleaseBranch);
+				if (preg_match('/^' . $solvedRelease . '/', $solvedData['inRelease'])) {
+					// Only considered unique if solved in the "current release"
+					$targetReleases[$solvedRelease] = TRUE;
+				}
+			}
+		}
+		if (count($targetReleases) == 1) {
+			// Unique to one release only
+			$uniqueNewFeatures[$topic] = array_shift(array_keys($targetReleases));
+		}
+
 		foreach ($releasesToCheck as $release) {
 			$releaseName = str_replace('-BP', '', $release[0]);
 			if (isset($projectData['mapBranchReleaseFunction'])) {
@@ -445,7 +492,11 @@ foreach ($projectsToCheck as $project => $projectData) {
 			$out .= sprintf('<a href="%s" target="_blank" title="Check review system for patches concerning this issue">Reviews</a>', $reviewLink);
 		}
 		$out .= '</td>';
-		$out .= sprintf('<td class="description">%s</td>', htmlspecialchars($subject));
+		$newFeature = '';
+		if ($uniqueNewFeatures[$topic]) {
+			$newFeature = sprintf('<strong>[%s]</strong> ', $uniqueNewFeatures[$topic]);
+		}
+		$out .= sprintf('<td class="description">%s%s</td>', $newFeature, htmlspecialchars($subject));
 		$out .= "</tr>\n";
 	}
 	$out .= "</table>";
