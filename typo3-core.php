@@ -82,10 +82,11 @@ $projectsToCheck = array(
 				'32476' => 'Abandoned for 4.5, it is a feature of 4.7',
 				'26287' => 'Is a feature for 4.6 and newer.',
 				'43088' => 'Is already merged with #25434',
-		 		'42195' => 'Decided to not backport this to older branches',
-		 		'36008' => 'Decided to not backport',
-		 		'35791' => 'The unit-tests are not available in 4.5',
-		 		'39876' => 'Discussed in the team to remove this one in'
+				'42195' => 'Decided to not backport this to older branches',
+                                '36008' => 'Decided to not backport',
+                                '35791' => 'The unit-tests are not available in 4.5',
+                                '39876' => 'Discussed in the team to remove this one in',
+				'43540' => 'Was reverted on 6.1',
 			),
 			'TYPO3_4-6' => array(
 				'25100' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
@@ -114,6 +115,7 @@ $projectsToCheck = array(
 				'40085' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
 				'41641' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
 				'28794' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
+				'43540' => 'Was reverted on 6.1',
 			),
 			'TYPO3_4-7' => array(
 				'10307' => 'Cannot go to 4.7 anymore.',
@@ -123,8 +125,9 @@ $projectsToCheck = array(
 				'26141' => 'Stanislas Rolland: The issue does not arise in releases 4.7 and 4.5.',
 				'41344' => 'Decided to not be backported to 4.7',
 				'43735' => 'Will not be backported to 4.7, see comment in Gerrit',
-		 		'42195' => 'Decided to not backport this to older branches',
-		 		'46042' => 'Decided to not backport this to 4.7'
+				'42195' => 'Decided to not backport this to older branches',
+				'46042' => 'Decided to not backport this to 4.7',
+				'43540' => 'Was reverted on 6.1',
 			),
 			'TYPO3_6-0' => array(
 				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
@@ -133,7 +136,8 @@ $projectsToCheck = array(
 				'6944' => 'Feature only merged for 6.1',
 				'43928' => 'Not needed in 6.0, because shouldMap() always returns TRUE',
 				'44806' => 'Not needed in 6.0, because of a small merging mistake in 6.1',
-				'42724' => 'Merged under another ticket for 6.0'
+				'42724' => 'Merged under another ticket for 6.0',
+				'43540' => 'Was reverted on 6.1',
 			),
 		),
 	),
