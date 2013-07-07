@@ -38,6 +38,9 @@ if (isset($argv[1]) && file_exists($argv[1])) {
 	exit(1);
 }
 
+// Check gerrit and pull from git before doing the work
+$online = FALSE;
+
 // %s = GIT_DIR
 // %s = 4-5-0 (first release)
 // %s = 4-5 (current state)
@@ -136,7 +139,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 	$revertedCommits = array();
 	$urlParts = parse_url($projectData['gitWebUrl']);
 	$gerritProject = ltrim(substr($urlParts['path'], 0, -4), '/');
-	$gerritIssues = fetchGerritReviewRequests($gerritProject);
+	if ($online) {
+		$gerritIssues = fetchGerritReviewRequests($gerritProject);
+	}
 	foreach ($releasesToCheck as $releaseRange) {
 		$startCommit = $releaseRange[1];
 		$branch = $releaseRange[2];
@@ -147,17 +152,19 @@ foreach ($projectsToCheck as $project => $projectData) {
 			$oldDir = getcwd();
 			chdir($gitRoot . $releaseRange[3]);
 		}
-		$output = array();
-		exec('GIT_DIR="' . $GIT_DIR . '" git fetch --all --tags', $output, $exitCode);
-		if ($exitCode !== 0) {
-			exit($exitCode);
+		if ($online) {
+			$output = array();
+			exec('GIT_DIR="' . $GIT_DIR . '" git fetch --all --tags', $output, $exitCode);
+			if ($exitCode !== 0) {
+				exit($exitCode);
+			}
+			exec('GIT_DIR="' . $GIT_DIR . '" git reset --hard ' . $branch, $output, $exitCode);
+			if ($exitCode !== 0) {
+				exit($exitCode);
+			}
+			$output = array();
+			exec('GIT_DIR="' . $GIT_DIR . '" git submodule update --init');
 		}
-		exec('GIT_DIR="' . $GIT_DIR . '" git reset --hard ' . $branch, $output, $exitCode);
-		if ($exitCode !== 0) {
-			exit($exitCode);
-		}
-		$output = array();
-		exec('GIT_DIR="' . $GIT_DIR . '" git submodule update --init');
 
 		$lastHash[$branch] = '';
 		$gitLogCmd = sprintf($cmdGitLog, $GIT_DIR, $startCommit, $branch);
