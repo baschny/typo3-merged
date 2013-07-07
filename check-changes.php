@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011-2012 Ernesto Baschny (ernst@cron-it.de>
+*  (c) 2011-2013 Ernesto Baschny (ernst@cron-it.de>
 *  (c) 2011-2012 Karsten Dambekalns <karsten@typo3.org>
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -468,6 +468,11 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$newFeature = '';
 		if ($uniqueNewFeatures[$topic]) {
 			$newFeature = sprintf('<strong>[%s]</strong> ', $uniqueNewFeatures[$topic]);
+		}
+		if (strlen($subject) > 80) {
+			$subject = sprintf('<span title="%s">%s...</span>', htmlspecialchars($subject), htmlspecialchars(substr($subject, 0, 76)));
+		} else {
+			$subject = htmlspecialchars($subject);
 		}
 		$out .= sprintf('<td class="description">%s%s</td>', $newFeature, htmlspecialchars($subject));
 		$out .= "</tr>\n";
