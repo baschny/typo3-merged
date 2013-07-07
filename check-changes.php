@@ -388,7 +388,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 		}
 
 		foreach ($releasesToCheck as $release) {
-			$releaseName = str_replace('-BP', '', $release[0]);
+			$releaseName = $release[0];
 			if (isset($projectData['mapBranchReleaseFunction'])) {
 				$releaseName = $projectData['mapBranchReleaseFunction']($releaseName);
 			}
@@ -398,35 +398,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 			$branchName = substr($releaseBranch, 7);
 			$class = 'info-none';
 			$text = '';
-			if (isset($issueData['solved'][$releaseBranch])) {
-				$subject = $issueData['solved'][$releaseBranch]['subject'];
-			}
-			if (preg_match('/^backports\/(.*)/', $releaseBranch, $matches)) {
-				// Specific output for backport branches
-				$originalBranch = 'origin/' . $matches[1];
-				if (isset($issueData['solved'][$releaseBranch]) && isset($issueData['solved'][$originalBranch])) {
-					// merged in original *and* backports branch already
-					$class = 'info-solved';
-					$text = sprintf('<span title="Merged in both origin and backports of %s">ok</span>', $matches[1]);
-				} else if (isset($issueData['solved'][$releaseBranch]) && !isset($issueData['solved'][$originalBranch])) {
-					// merged only in the backports branch: This is a backport!!!
-					$class = 'info-solved';
-					$text = sprintf('<a title="Merged only on backports of %s (%s)" target="_blank" href="%s/commit/%s" target="_blank">BACKPORT</a>',
-						$matches[1],
-						$issueData['solved'][$releaseBranch]['date'],
-						$projectData['gitWebUrl'],
-						$issueData['solved'][$releaseBranch]['hash']
-					);
-				} elseif (isset($issueData['solved'][$originalBranch]) && !isset($issueData['solved'][$releaseBranch])) {
-					// merged only in the original branch: needs to cherry-pick still
-					$text = sprintf('<a title="Merged only on origin of %s (%s), needs cherry-pick" target="_blank" href="%s/commit/%s" target="_blank">TODO</a>',
-						$matches[1],
-						$issueData['solved'][$originalBranch]['date'],
-						$projectData['gitWebUrl'],
-						$issueData['solved'][$originalBranch]['hash']
-					);
-				}
-			} elseif (isset($projectData['ignoreList'][$branchName][$topic])) {
+			if (isset($projectData['ignoreList'][$branchName][$topic])) {
 				// in case this issue + branch combination are on the ignore list, mark it appropriately
 				$class = 'info-not-needed';
 				$text = sprintf('<span title="%s" href="" target="_blank">given up</span>',
