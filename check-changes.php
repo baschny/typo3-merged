@@ -236,6 +236,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 						case 'Tested-by':
 							break;
 						case 'Releases':
+						case 'ReleaseS':
 						case 'Release':
 							foreach (explode(',', $bodyInfo[1]) as $release) {
 								if (trim($release) != '') {
