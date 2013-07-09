@@ -83,9 +83,9 @@ $projectsToCheck = array(
 				'26287' => 'Is a feature for 4.6 and newer.',
 				'43088' => 'Is already merged with #25434',
 				'42195' => 'Decided to not backport this to older branches',
-                                '36008' => 'Decided to not backport',
-                                '35791' => 'The unit-tests are not available in 4.5',
-                                '39876' => 'Discussed in the team to remove this one in',
+				'36008' => 'Decided to not backport',
+				'35791' => 'The unit-tests are not available in 4.5',
+				'39876' => 'Discussed in the team to remove this one in',
 				'43540' => 'Was reverted on 6.1',
 			),
 			'TYPO3_4-6' => array(
