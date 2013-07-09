@@ -75,6 +75,7 @@ $projectsToCheck = array(
 				'39662' => 'Stanislas Rolland: The issue does not arise in releases 4.6 and 4.5.',
 				'40409' => 'Will not be backported to 4.5, see comment in Gerrit',
 				'41120' => 'Will not be backported to 4.5 and 4.6, see comment in Gerrit',
+				'41344' => 'Will not be backported to 4.5, see coment in Gerrit',
 				'31184' => 'Does not apply to 4.5, no popup windows used in EM of 4.5',
 				'26141' => 'Stanislas Rolland: The issue does not arise in releases 4.7 and 4.5.',
 				'28794' => 'Does not apply to 4.5, Bug was introduced with accessibility refactoring',
