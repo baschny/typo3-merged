@@ -141,6 +141,18 @@ function branchToRelease($projectName, $branchName) {
 	return $releaseMapping[$projectName][$branchName];
 }
 
+function isValidRelease($project, $releaseName) {
+	global $projectsToCheck;
+	static $validReleases = array();
+	if (empty($validReleases)) {
+		foreach ($projectsToCheck[$project]['releases'] as $releaseRange) {
+			$release = $releaseRange[0];
+			$validReleases[$release] = TRUE;
+		}
+	}
+	return isset($validReleases[$releaseName]);
+}
+
 $out = '<html><head><title>Merged issues in releases</title><link rel="stylesheet" type="text/css" href="styles.css" /></head>';
 $out .= "<body>\n";
 $out .= "<h1>Issues merged into releases</h1>\n";
@@ -310,7 +322,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 				);
 				if (isset($commit['releases'])) {
 					foreach ($commit['releases'] as $release) {
-						$issueInfo[$issue]['planned'][$release] = TRUE;
+						if (isValidRelease($project, $release)) {
+							$issueInfo[$issue]['planned'][$release] = TRUE;
+						}
 					}
 				}
 			}
