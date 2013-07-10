@@ -25,6 +25,7 @@ $issueMapping = array(
 $projectsToCheck = array(
 	'TYPO3 CMS Core' => array(
 		'gitWebUrl' => 'http://git.typo3.org/Packages/TYPO3.CMS.git',
+		'perReleaseOutput' => 'core-%s.html',
 		'releases' => array(
 				# project, starting point, branch, working copy path
 			#	array('4.2', 'refs/tags/TYPO3_4-2-0', 'origin/TYPO3_4-2', 'TYPO3_4-2'),

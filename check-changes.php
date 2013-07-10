@@ -160,7 +160,6 @@ $out .= "<h1>Issues merged into releases</h1>\n";
 foreach ($projectsToCheck as $project => $projectData) {
 	$commits = array();
 	$lastHash = array();
-	$uniqueNewFeatures = array();
 	$releasesToCheck = $projectData['releases'];
 	echo 'Working on ' . $project . ' now.' . PHP_EOL;
 	$gerritIssues = array();
@@ -345,6 +344,28 @@ foreach ($projectsToCheck as $project => $projectData) {
 	$out .= "<table>\n";
 	$out .= "<tr>\n";
 	$out .= "<th>Release</th>\n";
+
+	// Prepare the per-release outputs
+	if ($projectData['perReleaseOutput']) {
+		foreach ($releasesToCheck as $releaseRange) {
+			$releaseName = $releaseRange[0];
+			if (isset($projectData['mapBranchReleaseFunction'])) {
+				$releaseName = $projectData['mapBranchReleaseFunction']($release[0]);
+			}
+			$outRelease[$releaseName] = '<html><head><title>Merged issues in releases</title><link rel="stylesheet" type="text/css" href="styles.css" /></head>';
+			$outRelease[$releaseName] .= "<body>\n";
+			$outRelease[$releaseName] .= "<h1>Issues merged into releases</h1>\n";
+			$outRelease[$releaseName] .= "<h2>$project, Release $releaseName</h2>\n";
+			$outRelease[$releaseName] .= "<table>\n";
+			$outRelease[$releaseName] .= "<tr>\n";
+			$outRelease[$releaseName] .= "<th>Issue</th>\n";
+			$outRelease[$releaseName] .= '<th class="release">' . $releaseName . "</th>\n";
+			$outRelease[$releaseName] .= '<th class="review">Reviews</th>';
+			$outRelease[$releaseName] .= '<th class="desc">Description</th>';
+			$outRelease[$releaseName] .= "</tr>";
+		}
+	}
+
 	foreach ($releasesToCheck as $release) {
 		$releaseName = $release[0];
 		if (isset($projectData['mapBranchReleaseFunction'])) {
@@ -365,7 +386,6 @@ foreach ($projectsToCheck as $project => $projectData) {
 				break;
 			}
 		}
-		$out .= "<tr>";
 		$issueLink = '';
 		$reviewLink = '';
 		if (preg_match('/^#(\d+)/', $issueNumber, $match)) {
@@ -376,7 +396,6 @@ foreach ($projectsToCheck as $project => $projectData) {
 		}
 		$topic = substr($issueNumber, 1);
 		$issueNumber = sprintf('<a href="%s" target="_blank">%s</a>', $issueLink, $issueNumber);
-		$out .= sprintf('<td class="issue">%s</td>', $issueNumber);
 
 		// Find out unique target releases (for new features):
 		$targetReleases = array();
@@ -396,12 +415,14 @@ foreach ($projectsToCheck as $project => $projectData) {
 				}
 			}
 		}
+		$uniqueNewFeatureRelease = FALSE;
 		if (count($targetReleases) == 1) {
 			// Unique to one release only
 			$targetReleasesKeys = array_keys($targetReleases);
-			$uniqueNewFeatures[$topic] = array_shift($targetReleasesKeys);
+			$uniqueNewFeatureRelease = array_shift($targetReleasesKeys);
 		}
 
+		$outReleasesCells = '';
 		foreach ($releasesToCheck as $release) {
 			$releaseName = $release[0];
 			if (isset($projectData['mapBranchReleaseFunction'])) {
@@ -473,23 +494,40 @@ foreach ($projectsToCheck as $project => $projectData) {
 					}
 				}
 			}
-			$out .= sprintf('<td class="%s" branch="%s" issue="%s">%s</td>', $class, $branchName, $topic, $text);
+			if ($uniqueNewFeatureRelease == $releaseName) {
+				$outReleasesCellUnique = sprintf('<td class="%s" branch="%s" issue="%s">%s</td>', $class, $branchName, $topic, $text);
+			}
+			$outReleasesCells .= sprintf('<td class="%s" branch="%s" issue="%s">%s</td>', $class, $branchName, $topic, $text);
 		}
-		$out .= '<td class="review">';
 		if ($reviewLink) {
-			$out .= sprintf('<a href="%s" target="_blank" title="Check review system for patches concerning this issue">Reviews</a>', $reviewLink);
+			$reviewLinkHtml = sprintf('<a href="%s" target="_blank" title="Check review system for patches concerning this issue">Reviews</a>', $reviewLink);
+		} else {
+			$reviewLinkHtml = '';
 		}
-		$out .= '</td>';
-		$newFeature = '';
-		if (isset($uniqueNewFeatures[$topic])) {
-			$newFeature = sprintf('<strong>[%s]</strong> ', $uniqueNewFeatures[$topic]);
+		$newFeatureReleaseHtml = '';
+		if ($uniqueNewFeatureRelease) {
+			$newFeatureReleaseHtml = sprintf('<strong>[%s]</strong> ', $uniqueNewFeatureRelease);
 		}
 		if (strlen($subject) > 80) {
 			$subject = sprintf('<span title="%s">%s...</span>', htmlspecialchars($subject), htmlspecialchars(substr($subject, 0, 76)));
 		} else {
 			$subject = htmlspecialchars($subject);
 		}
-		$out .= sprintf('<td class="description">%s%s</td>', $newFeature, htmlspecialchars($subject));
+		if ($projectData['perReleaseOutput']
+			&& $uniqueNewFeatureRelease
+		) {
+			$outRelease[$uniqueNewFeatureRelease] .= "<tr>";
+			$outRelease[$uniqueNewFeatureRelease] .= sprintf('<td class="issue">%s</td>', $issueNumber);
+			$outRelease[$uniqueNewFeatureRelease] .= $outReleasesCellUnique;
+			$outRelease[$uniqueNewFeatureRelease] .= sprintf('<td class="review">%s</td>', $reviewLinkHtml);
+			$outRelease[$uniqueNewFeatureRelease] .= sprintf('<td class="description">%s</td>', htmlspecialchars($subject));
+			$outRelease[$uniqueNewFeatureRelease] .= "</tr>\n";
+		}
+		$out .= "<tr>";
+		$out .= sprintf('<td class="issue">%s</td>', $issueNumber);
+		$out .= $outReleasesCells;
+		$out .= sprintf('<td class="review">%s</td>', $reviewLinkHtml);
+		$out .= sprintf('<td class="description">%s%s</td>', $newFeatureReleaseHtml, htmlspecialchars($subject));
 		$out .= "</tr>\n";
 	}
 	$out .= "</table>";
@@ -499,6 +537,16 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$out .= sprintf('<li>%s: <a target="_blank" href="%s/commit/%s" target="_blank">%s</a>', $release, $projectData['gitWebUrl'], $hash, $hash);
 	}
 	$out .= '</ul>';
+
+	// Prepare the per-release outputs
+	if ($projectData['perReleaseOutput']) {
+		foreach ($outRelease as $releaseName => $outLines) {
+			$outLines .= "</body></html>";
+			$fh = fopen(sprintf($projectData['perReleaseOutput'], $releaseName), 'w');
+			fwrite($fh, $outLines);
+			fclose($fh);
+		}
+	}
 
 }
 
