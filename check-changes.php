@@ -366,14 +366,14 @@ foreach ($projectsToCheck as $project => $projectData) {
 
 		// Find out unique target releases (for new features):
 		$targetReleases = array();
-		if ($issueData['planned']) {
+		if (isset($issueData['planned'])) {
 			foreach ($issueData['planned'] as $plannedRelease => $dummy) {
 				if (!isset($projectData['ignoreList'][$plannedRelease][$topic])) {
 					$targetReleases[$plannedRelease] = TRUE;
 				}
 			}
 		}
-		if ($issueData['solved']) {
+		if (isset($issueData['solved'])) {
 			foreach ($issueData['solved'] as $solvedReleaseBranch => $solvedData) {
 				$solvedRelease = branchToRelease($project, $solvedReleaseBranch);
 				if (preg_match('/^' . $solvedRelease . '/', $solvedData['inRelease'])) {
@@ -384,7 +384,8 @@ foreach ($projectsToCheck as $project => $projectData) {
 		}
 		if (count($targetReleases) == 1) {
 			// Unique to one release only
-			$uniqueNewFeatures[$topic] = array_shift(array_keys($targetReleases));
+			$targetReleasesKeys = array_keys($targetReleases);
+			$uniqueNewFeatures[$topic] = array_shift($targetReleasesKeys);
 		}
 
 		foreach ($releasesToCheck as $release) {
@@ -466,7 +467,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 		}
 		$out .= '</td>';
 		$newFeature = '';
-		if ($uniqueNewFeatures[$topic]) {
+		if (isset($uniqueNewFeatures[$topic])) {
 			$newFeature = sprintf('<strong>[%s]</strong> ', $uniqueNewFeatures[$topic]);
 		}
 		if (strlen($subject) > 80) {
