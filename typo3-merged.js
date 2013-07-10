@@ -48,6 +48,15 @@ $(document).ready(function(){
 			);
 		});
 
+		// order the filter buttons alphabetically and then move the two "special" buttons
+		// to the front again (did I mention that this is a nasty quick-and-dirty tool
+		// at all and I'm too lazy to make this second part more like "beautiful")
+		var orderedButtons = orderButtons(
+			$(this).prev().prev().find('button')
+		);
+		$(orderedButtons).appendTo($(this).prev().prev());
+		$(this).prev().prev().find('button.hideResolved').insertBefore($(this).prev().prev().find('button:first'));
+		$(this).prev().prev().find('button.showAllEntries').insertBefore($(this).prev().prev().find('button:first'));
 	});
 
 	updateCount();
@@ -68,6 +77,24 @@ $(document).ready(function(){
 		$('.hideResolved').click();
 	}
 
+	/**
+	 * Takes a bunch of buttons and orders them by their class (which is something like
+	 * "TYPO3_4-7" or the like).
+	 *
+	 * @param array the unordered buttons
+	 * @return array the ordered buttons
+	 */
+	function orderButtons(buttons) {
+		buttons.sort(function(a, b) {
+			if ($(a).attr('class') < $(b).attr('class')) {
+				return -1;
+			} else {
+				return 1;
+			}
+		});
+
+		return buttons;
+	}
 
 	/**
 	 * Called multiple times per target branch, this adds a button to filter the list
@@ -79,7 +106,7 @@ $(document).ready(function(){
 		officialBranchName = branch;
 		branch=normalizeName(branch);
 
-		if (table.prev().prev().find('.'+branch).length) {
+		if (table.prev().prev().find('.' + branch).length) {
 			// e.g. the branch-button exists already
 		} else {
 			table.prev().prev().append('<button class="' + branch + '">Show only ' + officialBranchName + '</button>');
