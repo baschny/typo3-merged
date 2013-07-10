@@ -127,11 +127,11 @@ function compareIssues($a, $b) {
 }
 
 function branchToRelease($projectName, $branchName) {
-	global $projectsToCheck, $releasesToCheck;
+	global $projectsToCheck;
 	static $releaseMapping = array();
 	if (empty($releaseMapping)) {
 		foreach ($projectsToCheck as $project => $projectData) {
-			foreach ($releasesToCheck as $releaseRange) {
+			foreach ($projectData['releases'] as $releaseRange) {
 				$release = $releaseRange[0];
 				$branch = $releaseRange[2];
 				$releaseMapping[$project][$branch] = $release;
