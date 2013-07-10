@@ -39,7 +39,7 @@ if (isset($argv[1]) && file_exists($argv[1])) {
 }
 
 // Check gerrit and pull from git before doing the work
-$online = FALSE;
+$online = TRUE;
 
 // %s = GIT_DIR
 // %s = 4-5-0 (first release)
