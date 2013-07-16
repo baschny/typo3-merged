@@ -44,7 +44,8 @@ $online = TRUE;
 // %s = GIT_DIR
 // %s = 4-5-0 (first release)
 // %s = 4-5 (current state)
-$cmdGitLog = 'GIT_DIR="%s" git log %s..%s --submodule --pretty=format:hash:%%h%%x01hashfull:%%H%%x01date:%%cd%%x01tags:%%d%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
+// %s = additional git params, if desired (i.e. --dirstat)
+$cmdGitLog = 'GIT_DIR="%s" git log %s..%s%s --submodule --pretty=format:hash:%%h%%x01hashfull:%%H%%x01date:%%cd%%x01tags:%%d%%x01subject:%%s%%x01body:%%b%%x0a--COMMIT-- --date=iso';
 
 // Requires that ssh is allowed to gerrit (private key)
 $cmdGerrit = 'ssh review.typo3.org -p 29418 gerrit query --format json status:open project:%s';
@@ -169,6 +170,11 @@ foreach ($projectsToCheck as $project => $projectData) {
 	if ($online) {
 		$gerritIssues = fetchGerritReviewRequests($gerritProject);
 	}
+	$additionalGitParams = '';
+	if (isset($projectData['extractComponentNameFromPathByBranchCallback'])) {
+		$additionalGitParams = ' --dirstat';
+	}
+
 	foreach ($releasesToCheck as $releaseRange) {
 		$startCommit = $releaseRange[1];
 		$branch = $releaseRange[2];
@@ -194,7 +200,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 		}
 
 		$lastHash[$branch] = '';
-		$gitLogCmd = sprintf($cmdGitLog, $GIT_DIR, $startCommit, $branch);
+		$gitLogCmd = sprintf($cmdGitLog, $GIT_DIR, $startCommit, $branch, $additionalGitParams);
 		$output = array();
 		exec($gitLogCmd, $output, $exitCode);
 		if ($gitRootIsWorkingCopy) {
@@ -282,15 +288,35 @@ foreach ($projectsToCheck as $project => $projectData) {
 				continue;
 			}
 
-			$infos = explode("\x01", $line);
-			if (count($infos) === 1) {
-				// Continuation line
-				$commitInfos[$currentField] .= "\n" . $line;
-			} else {
-				foreach ($infos as $info) {
-					list($field, $value) = explode(':', $info, 2);
-					$currentField = $field;
-					$commitInfos[$field] = $value;
+			if (preg_match('/^\s+([\d\.]+)%\s+(.*)/', $line, $matches)) {
+				$percent = $matches[1];
+				$path = $matches[2];
+				// Is a --dirstat line, format:
+				//  100.0% typo3/sysext/dbal/
+				//   42.5% typo3/sysext/extbase/Classes/MVC/Controller/
+				// ....
+				// Unfortulately these refer to the *previous* log entry
+				$component = '';
+				if ($projectData['extractComponentNameFromPathByBranchCallback']) {
+					$component = $projectData['extractComponentNameFromPathByBranchCallback'](branchToRelease($project, $branch), $path);
+				}
+				if ($component) {
+					if (!isset($commits[$branch][count($commits[$branch])-1]['components'][$component])) {
+						$commits[$branch][count($commits[$branch])-1]['components'][$component] = 0;
+					}
+					$commits[$branch][count($commits[$branch])-1]['components'][$component] += $percent;
+				}
+			} else if ($line != '') {
+				$infos = explode("\x01", $line);
+				if (count($infos) === 1) {
+					// Continuation line
+					$commitInfos[$currentField] .= "\n" . $line;
+				} else {
+					foreach ($infos as $info) {
+						list($field, $value) = explode(':', $info, 2);
+						$currentField = $field;
+						$commitInfos[$field] = $value;
+					}
 				}
 			}
 		}
@@ -319,6 +345,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 					'inRelease' => $commit['inRelease'],
 					'reverted' => $commit['reverted'],
 				);
+				if (isset($commit['components'])) {
+					$issueInfo[$issue]['solved'][$branch]['components'] = $commit['components'];
+				}
 				if (isset($commit['releases'])) {
 					foreach ($commit['releases'] as $release) {
 						if (isValidRelease($project, $release)) {
@@ -361,6 +390,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 			$outRelease[$releaseName] .= "<th>Issue</th>\n";
 			$outRelease[$releaseName] .= '<th class="release">' . $releaseName . "</th>\n";
 			$outRelease[$releaseName] .= '<th class="review">Reviews</th>';
+			if (isset($projectData['extractComponentNameFromPathByBranchCallback'])) {
+				$outRelease[$releaseName] .= '<th class="components">Components</th>';
+			}
 			$outRelease[$releaseName] .= '<th class="desc">Description</th>';
 			$outRelease[$releaseName] .= "</tr>";
 		}
@@ -374,16 +406,23 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$out .= sprintf('<th class="release">%s</th>', $releaseName);
 	}
 	$out .= '<th class="review">Reviews</th>';
+	if (isset($projectData['extractComponentNameFromPathByBranchCallback'])) {
+		$out .= '<th class="components">Components</th>';
+	}
 	$out .= '<th class="desc">Description</th>';
 	$out .= "</tr>";
 
 	foreach ($issueInfo as $issueNumber => $issueData) {
+		$components = array();
 		$subject = 'Unknown';
 		foreach ($releasesToCheck as $release) {
 			$releaseBranch = $release[2];
 			if (isset($issueData['solved'][$releaseBranch])) {
 				$subject = $issueData['solved'][$releaseBranch]['subject'];
-				break;
+				if (isset($issueData['solved'][$releaseBranch]['components'])) {
+					$components = $issueData['solved'][$releaseBranch]['components'];
+					arsort($components);
+				}
 			}
 		}
 		$issueLink = '';
@@ -513,6 +552,27 @@ foreach ($projectsToCheck as $project => $projectData) {
 		} else {
 			$subject = htmlspecialchars($subject);
 		}
+
+		$componentsHtml = '';
+		$componentsOthersHtml = '';
+		if (!empty($components)) {
+			$others = array();
+			foreach ($components as $componentName => $percent) {
+				if ($percent <= 10) {
+					$others[$componentName] = $percent;
+				} else {
+					$componentsHtml .= sprintf(' <span title="%s%%" class="component">%s</span>', $percent, $componentName);
+				}
+			}
+			if (!empty($others)) {
+				$othersList = '';
+				foreach ($others as $componentName => $percent) {
+					$othersList .= sprintf('%s (%s%%), ', $componentName, $percent);
+				}
+				$componentsHtml .= sprintf(' <span title="%s" class="component">others</span>', trim($othersList, ', '));
+			}
+		}
+
 		if ($projectData['perReleaseOutput']
 			&& $uniqueNewFeatureRelease
 		) {
@@ -520,6 +580,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 			$outRelease[$uniqueNewFeatureRelease] .= sprintf('<td class="issue">%s</td>', $issueNumber);
 			$outRelease[$uniqueNewFeatureRelease] .= $outReleasesCellUnique;
 			$outRelease[$uniqueNewFeatureRelease] .= sprintf('<td class="review">%s</td>', $reviewLinkHtml);
+			if (isset($projectData['extractComponentNameFromPathByBranchCallback'])) {
+				$outRelease[$uniqueNewFeatureRelease] .= sprintf('<td class="components">%s</td>', $componentsHtml);
+			}
 			$outRelease[$uniqueNewFeatureRelease] .= sprintf('<td class="description">%s</td>', htmlspecialchars($subject));
 			$outRelease[$uniqueNewFeatureRelease] .= "</tr>\n";
 		}
@@ -527,6 +590,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$out .= sprintf('<td class="issue">%s</td>', $issueNumber);
 		$out .= $outReleasesCells;
 		$out .= sprintf('<td class="review">%s</td>', $reviewLinkHtml);
+		if (isset($projectData['extractComponentNameFromPathByBranchCallback'])) {
+			$out .= sprintf('<td class="components">%s</td>', $componentsHtml);
+		}
 		$out .= sprintf('<td class="description">%s%s</td>', $newFeatureReleaseHtml, htmlspecialchars($subject));
 		$out .= "</tr>\n";
 	}

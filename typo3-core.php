@@ -26,6 +26,7 @@ $projectsToCheck = array(
 	'TYPO3 CMS Core' => array(
 		'gitWebUrl' => 'http://git.typo3.org/Packages/TYPO3.CMS.git',
 		'perReleaseOutput' => 'core-%s.html',
+		'extractComponentNameFromPathByBranchCallback' => 'extractComponentNameFromPathByBranchCMS',
 		'releases' => array(
 				# project, starting point, branch, working copy path
 			#	array('4.2', 'refs/tags/TYPO3_4-2-0', 'origin/TYPO3_4-2', 'TYPO3_4-2'),
@@ -158,5 +159,24 @@ function getDetectedReleaseCommitCallback($commitInfos) {
 	return NULL;
 }
 
+/**
+ * Callback to return a "component name" for a path for a particular branch
+ *
+ * @param $branch
+ * @param $path
+ */
+function extractComponentNameFromPathByBranchCMS($release, $path) {
+	if ($release == '6.2' && preg_match('#^typo3/sysext/(.*?)/#', $path, $matches)) {
+		$component = $matches[1];
+		if ($component == 'extensionmanager') {
+			// Shortify
+			$component = 'em';
+		} else if (in_array($component, array('core', 'backend')) && preg_match('#^typo3/sysext/.*?/Classes/(.*?)/#', $path, $matches)) {
+			$component = $component . ':' . $matches[1];
+		}
+		return $component;
+	}
+	return '';
+}
 
 ?>
