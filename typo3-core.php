@@ -143,7 +143,11 @@ $projectsToCheck = array(
 				'44806' => 'Not needed in 6.0, because of a small merging mistake in 6.1',
 				'42724' => 'Merged under another ticket for 6.0',
 				'43540' => 'Was reverted on 6.1',
+				'53594' => 'Code not present in 6.1, 6.0',
 			),
+			'TYPO3_6-1' => array(
+				'53594' => 'Code not present in 6.1, 6.0',
+			)
 		),
 	),
 );
