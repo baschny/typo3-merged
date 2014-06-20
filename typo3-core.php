@@ -92,6 +92,7 @@ $projectsToCheck = array(
 				'35791' => 'The unit-tests are not available in 4.5',
 				'39876' => 'Discussed in the team to remove this one in',
 				'43540' => 'Was reverted on 6.1',
+				'30244' => 'Will not be backported to 4.5 and 6.0',
 			),
 			'TYPO3_4-6' => array(
 				'25100' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
@@ -144,6 +145,7 @@ $projectsToCheck = array(
 				'42724' => 'Merged under another ticket for 6.0',
 				'43540' => 'Was reverted on 6.1',
 				'53594' => 'Code not present in 6.1, 6.0',
+				'30244' => 'Will not be backported to 4.5 and 6.0',
 			),
 			'TYPO3_6-1' => array(
 				'53594' => 'Code not present in 6.1, 6.0',
