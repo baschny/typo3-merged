@@ -187,16 +187,16 @@ foreach ($projectsToCheck as $project => $projectData) {
 		}
 		if ($online) {
 			$output = array();
-			exec('GIT_DIR="' . $GIT_DIR . '" git fetch --all --tags', $output, $exitCode);
+			exec('GIT_DIR="' . $GIT_DIR . '" git fetch --quiet --all --tags', $output, $exitCode);
 			if ($exitCode !== 0) {
 				exit($exitCode);
 			}
-			exec('GIT_DIR="' . $GIT_DIR . '" git reset --hard ' . $branch, $output, $exitCode);
+			exec('GIT_DIR="' . $GIT_DIR . '" git reset --quiet --hard ' . $branch, $output, $exitCode);
 			if ($exitCode !== 0) {
 				exit($exitCode);
 			}
 			$output = array();
-			exec('GIT_DIR="' . $GIT_DIR . '" git submodule update --init');
+			exec('GIT_DIR="' . $GIT_DIR . '" git submodule --quiet update --init');
 		}
 
 		$lastHash[$branch] = '';
