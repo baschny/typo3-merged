@@ -1,7 +1,7 @@
 <?php
 // configuration for TYPO3 core
 
-$gitRoot = '/www/shared/TYPO3core/';
+$gitRoot = getcwd() . '/data/TYPO3core/';
 $gitRootIsWorkingCopy = TRUE;
 $htmlFile = 'core.html';
 
