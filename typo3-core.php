@@ -39,7 +39,8 @@ $projectsToCheck = array(
 				array('4.7', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-7', 'TYPO3_4-7'),
 				array('6.0', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-0', 'TYPO3_6-0'),
 				array('6.1', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-1', 'TYPO3_6-1'),
-				array('6.2', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'TYPO3_6-2'),
+				array('6.2', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-2', 'TYPO3_6-2'),
+				array('6.3', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'TYPO3_6-3'),
 		),
 		// list of issues to be ignored as TODOs from a certain branch.
 		// Used to shorten the list of issues that are marked "TODO"
@@ -172,7 +173,7 @@ function getDetectedReleaseCommitCallback($commitInfos) {
  * @param $path
  */
 function extractComponentNameFromPathByBranchCMS($release, $path) {
-	if ($release == '6.2' && preg_match('#^typo3/sysext/(.*?)/#', $path, $matches)) {
+	if (($release == '6.2' || $release == '6.3') && preg_match('#^typo3/sysext/(.*?)/#', $path, $matches)) {
 		$component = $matches[1];
 		if ($component == 'extensionmanager') {
 			// Shortify
