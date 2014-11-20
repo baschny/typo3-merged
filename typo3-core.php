@@ -31,16 +31,9 @@ $projectsToCheck = array(
 		'extractComponentNameFromPathByBranchCallback' => 'extractComponentNameFromPathByBranchCMS',
 		'releases' => array(
 				# project, starting point, branch, working copy path
-			#	array('4.2', 'refs/tags/TYPO3_4-2-0', 'origin/TYPO3_4-2', 'TYPO3_4-2'),
-			#	array('4.3', 'refs/tags/TYPO3_4-3-0', 'origin/TYPO3_4-3', 'TYPO3_4-3'),
-			#	array('4.4', 'refs/tags/TYPO3_4-4-0', 'origin/TYPO3_4-4', 'TYPO3_4-4'),
 				array('4.5', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-5', 'TYPO3_4-5'),
-			#	array('4.6', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-6', 'TYPO3_4-6'),
-				array('4.7', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_4-7', 'TYPO3_4-7'),
-				array('6.0', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-0', 'TYPO3_6-0'),
-				array('6.1', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-1', 'TYPO3_6-1'),
 				array('6.2', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-2', 'TYPO3_6-2'),
-				array('6.3', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'TYPO3_6-3'),
+				array('7.0', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'TYPO3_7-0'),
 		),
 		// list of issues to be ignored as TODOs from a certain branch.
 		// Used to shorten the list of issues that are marked "TODO"
@@ -95,62 +88,6 @@ $projectsToCheck = array(
 				'43540' => 'Was reverted on 6.1',
 				'30244' => 'Will not be backported to 4.5 and 6.0',
 			),
-			'TYPO3_4-6' => array(
-				'25100' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'32292' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'32397' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'33165' => 'No change needed here, as authUser is only called when a login is triggered',
-				'33234' => 'Abandoned for 4.6, see comment in Gerrit.',
-				'33853' => 'Abandoned for 4.6 as it does not apply cleanly, see comment in Gerrit.',
-				'34396' => 'Does not apply to current 4.6.x, change is already applied, WTF?',
-				'34601' => 'Does not apply, hook does not exists in 4.6',
-				'34627' => 'Does not apply since IDNA converter is not in 4.5',
-				'34730' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'35333' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'36937' => 'Does not apply to 4.6, see comment in Gerrit.',
-				'39356' => 'Will not be backported to 4.5 and 4.6, see comment in Gerrit',
-				'39662' => 'Stanislas Rolland: The issue does not arise in releases 4.6 and 4.5.',
-				'41120' => 'Will not be backported to 4.5 and 4.6, see comment in Gerrit',
-				'41924' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'43540' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'44470' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'38705' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'28741' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'45703' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'42279' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'15771' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'40085' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'41641' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'28794' => 'It was decided to not backport this to 4.6 at the end of the version\'s lifetime',
-				'43540' => 'Was reverted on 6.1',
-			),
-			'TYPO3_4-7' => array(
-				'10307' => 'Cannot go to 4.7 anymore.',
-				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
-				'33749' => 'This feature is postponed to 6.0.',
-				'34363' => 'Feature was too late to be merged in 4.7, merged in 6.0',
-				'26141' => 'Stanislas Rolland: The issue does not arise in releases 4.7 and 4.5.',
-				'41344' => 'Decided to not be backported to 4.7',
-				'43735' => 'Will not be backported to 4.7, see comment in Gerrit',
-				'42195' => 'Decided to not backport this to older branches',
-				'46042' => 'Decided to not backport this to 4.7',
-				'43540' => 'Was reverted on 6.1',
-			),
-			'TYPO3_6-0' => array(
-				'30969' => 'Since 4.7 the about module is build in ExtBase. This patch does not apply.',
-				'43184' => 'Benni Mack: This won\'t work in 6.0',
-				'43088' => 'Is already merged with #25434',
-				'6944' => 'Feature only merged for 6.1',
-				'43928' => 'Not needed in 6.0, because shouldMap() always returns TRUE',
-				'44806' => 'Not needed in 6.0, because of a small merging mistake in 6.1',
-				'42724' => 'Merged under another ticket for 6.0',
-				'43540' => 'Was reverted on 6.1',
-				'53594' => 'Code not present in 6.1, 6.0',
-				'30244' => 'Will not be backported to 4.5 and 6.0',
-			),
-			'TYPO3_6-1' => array(
-				'53594' => 'Code not present in 6.1, 6.0',
-			)
 		),
 	),
 );
@@ -175,7 +112,7 @@ function getDetectedReleaseCommitCallback($commitInfos) {
  * @param $path
  */
 function extractComponentNameFromPathByBranchCMS($release, $path) {
-	if (($release == '6.2' || $release == '6.3') && preg_match('#^typo3/sysext/(.*?)/#', $path, $matches)) {
+	if (($release == '6.2' || $release == '7.0') && preg_match('#^typo3/sysext/(.*?)/#', $path, $matches)) {
 		$component = $matches[1];
 		if ($component == 'extensionmanager') {
 			// Shortify
