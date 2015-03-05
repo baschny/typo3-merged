@@ -91,6 +91,11 @@ $projectsToCheck = array(
 			'TYPO3_6-2' => array(
 				'34728' => 'Reverted backport. Is already merged with #37167',
 				'35093' => 'Reverted backport. Is already merged with #37167',
+				'64618' => 'Patch is not relevant for 6.2 (found out after merging)',
+				'54410' => 'Will not be backported to 6.2, see comment in Gerrit #35750',
+				'59947' => 'Abandoned for 6.2, see comment in Gerrit',
+				'59255' => 'Original patch was reverted.',
+				'63648' => 'Abandoned for 6.2, see comment in Gerrit',
 			)
 		),
 	),
