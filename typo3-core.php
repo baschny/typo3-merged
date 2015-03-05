@@ -88,6 +88,10 @@ $projectsToCheck = array(
 				'43540' => 'Was reverted on 6.1',
 				'30244' => 'Will not be backported to 4.5 and 6.0',
 			),
+			'TYPO3_6-2' => array(
+				'34728' => 'Reverted backport. Is already merged with #37167',
+				'35093' => 'Reverted backport. Is already merged with #37167',
+			)
 		),
 	),
 );
