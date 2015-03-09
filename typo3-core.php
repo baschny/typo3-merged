@@ -87,6 +87,7 @@ $projectsToCheck = array(
 				'39876' => 'Discussed in the team to remove this one in',
 				'43540' => 'Was reverted on 6.1',
 				'30244' => 'Will not be backported to 4.5 and 6.0',
+				'61943' => 'Will not be backported to 4.5, see comment in Gerrit',
 			),
 			'TYPO3_6-2' => array(
 				'34728' => 'Reverted backport. Is already merged with #37167',
