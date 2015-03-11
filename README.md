@@ -10,7 +10,7 @@ and which is still open.
 
 See it in action here:
 
-	http://www.typo3-anbieter.de/typo3-merges/
+	http://tools.typo3.org/cms/merged/
 	http://bit.ly/flow3-merged-changes
 
 
