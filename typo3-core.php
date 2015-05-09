@@ -95,6 +95,7 @@ $projectsToCheck = array(
 				'54410' => 'Will not be backported to 6.2, see comment in Gerrit #35750',
 				'54730' => 'Abandoned for 6.2, see comment in Gerrit',
 				'56426' => 'Was intended for master only.',
+				'57379' => 'Abandoned for 6.2, see comment in Gerrit #38515',
 				'59255' => 'Original patch was reverted.',
 				'59947' => 'Abandoned for 6.2, see comment in Gerrit',
 				'63275' => 'Will not be backported to 6.2, see comment in Gerrit',
