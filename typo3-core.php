@@ -95,12 +95,14 @@ $projectsToCheck = array(
 				'54410' => 'Will not be backported to 6.2, see comment in Gerrit #35750',
 				'54730' => 'Abandoned for 6.2, see comment in Gerrit',
 				'56426' => 'Was intended for master only.',
+				'57379' => 'Abandoned for 6.2, see comment in Gerrit #38515',
 				'59255' => 'Original patch was reverted.',
 				'59947' => 'Abandoned for 6.2, see comment in Gerrit',
 				'63275' => 'Will not be backported to 6.2, see comment in Gerrit',
 				'63648' => 'Abandoned for 6.2, see comment in Gerrit',
 				'64618' => 'Patch is not relevant for 6.2 (found out after merging)',
-				'66167' => 'No backport possible, code not present in 6.2'
+				'66167' => 'No backport possible, code not present in 6.2',
+				'66729' => 'No backport needed as the feature (Gerrit #30972) wasn\'t backported either.'
 			)
 		),
 	),
