@@ -87,6 +87,7 @@ $projectsToCheck = array(
 				'43735' => 'Will not be backported to 4.5, see comment in Gerrit',
 				'43088' => 'Is already merged with #25434',
 				'43540' => 'Was reverted on 6.1',
+				'58896' => '4.5 is ELTS, no public merges',
 				'59417' => '4.5 is ELTS, no public merges',
 				'61943' => 'Original patch was reverted, followup not for 4.5, see comment in Gerrit #33020',
 			),
