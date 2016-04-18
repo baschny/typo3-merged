@@ -106,6 +106,7 @@ $projectsToCheck = array(
 				'63275' => 'Will not be backported to 6.2, see comment in Gerrit',
 				'63648' => 'Abandoned for 6.2, see comment in Gerrit',
 				'64618' => 'Patch is not relevant for 6.2 (found out after merging)',
+				'64883' => 'Abandoned for 6.2, see comment in Gerrit #36674',
 				'66312' => 'Abandoned for 6.2, see comment in Gerrit #44714',
 				'66167' => 'No backport possible, code not present in 6.2',
 				'66729' => 'No backport needed as the feature (Gerrit #30972) wasn\'t backported either.',
