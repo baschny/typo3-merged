@@ -73,23 +73,23 @@ function fetchGerritReviewRequests($project) {
 			if (!$item) {
 				continue;
 			}
-			if (isset($item['type']) && $item['type'] == 'stats') {
+			if (isset($item['type']) && $item['type'] === 'stats') {
 				if (intval($item['rowCount']) < 500) {
 					// This was the last call
 					$gerritFinished = TRUE;
 				}
 			} else {
-				$lastSortKey = $item['sortKey'];
+				$lastSortKey = isset($item['sortKey']) ? $item['sortKey'] : '';
 				if (isset($item['topic'])) {
 					$issueNumber = $item['topic'];
 					if (preg_match('/^issue\/(\d+)/', $issueNumber, $matches)) {
 						$issueNumber = $matches[1];
 					}
 					$issueNumbers = array($issueNumber);
-				} else if (isset($item['trackingIds'])) {
+				} elseif (isset($item['trackingIds'])) {
 					$issueNumbers = array();
 					foreach ($item['trackingIds'] as $tracking) {
-						if ($tracking['system'] == 'Forge') {
+						if ($tracking['system'] === 'Forge') {
 							$issueNumbers[] = $tracking['id'];
 						}
 					}
@@ -224,9 +224,9 @@ foreach ($projectsToCheck as $project => $projectData) {
 					$bodyInfo = explode(':', $bodyLine, 2);
 					// Fix switched Resolves / Release entries
 					$bodyInfo[0] = trim($bodyInfo[0]);
-					if ($bodyInfo[0] == 'Resolves' && preg_match('/^\s*\d\.\d$/', $bodyInfo[1])) {
+					if ($bodyInfo[0] === 'Resolves' && preg_match('/^\s*\d\.\d$/', $bodyInfo[1])) {
 						$bodyInfo[0] = 'Releases';
-					} elseif ($bodyInfo[0] == 'Releases' && preg_match('/^\s*#\d+$/', $bodyInfo[1])) {
+					} elseif ($bodyInfo[0] === 'Releases' && preg_match('/^\s*#\d+$/', $bodyInfo[1])) {
 						$bodyInfo[0] = 'Resolves';
 					}
 					switch ($bodyInfo[0]) {
@@ -239,7 +239,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 								$issue = trim($issue);
 								// Only use the numbers after the "#" (in case of buggy lines)
 								$issue = preg_replace('/^(#[0-9]+).*$/', '$1', $issue);
-								if (intval($issue)) {
+								if ((int)$issue) {
 									$issue = '#' . $issue;
 								}
 								if (isset($issueMapping[$issue])) {
@@ -256,7 +256,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 						case 'ReleaseS':
 						case 'Release':
 							foreach (explode(',', $bodyInfo[1]) as $release) {
-								if (trim($release) != '') {
+								if (trim($release) !== '') {
 									$commitInfos['releases'][] = trim($release);
 								}
 							}
@@ -280,7 +280,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 					$commitInfos['reverted'] = $revertedCommits[$commitInfos['hashfull']];
 				}
 				$commits[$branch][] = $commitInfos;
-				if ($revertCommit != '') {
+				if ($revertCommit !== '') {
 					// Remember this commit which revertes some commit that is yet to come
 					$revertedCommits[$revertCommit] = $commitInfos;
 				}
@@ -306,7 +306,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 					}
 					$commits[$branch][count($commits[$branch])-1]['components'][$component] += $percent;
 				}
-			} else if ($line != '') {
+			} elseif ($line !== '') {
 				$infos = explode("\x01", $line);
 				if (count($infos) === 1) {
 					// Continuation line
@@ -455,7 +455,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 			}
 		}
 		$uniqueNewFeatureRelease = FALSE;
-		if (count($targetReleases) == 1) {
+		if (count($targetReleases) === 1) {
 			// Unique to one release only
 			$targetReleasesKeys = array_keys($targetReleases);
 			$uniqueNewFeatureRelease = array_shift($targetReleasesKeys);
@@ -483,7 +483,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 			} else {
 				if (isset($issueData['solved'][$releaseBranch])) {
 					$class = 'info-solved';
-					if ($issueData['solved'][$releaseBranch]['inRelease'] == 'next') {
+					if ($issueData['solved'][$releaseBranch]['inRelease'] === 'next') {
 						$versionName = 'for next release';
 						$versionTag = 'next';
 					} else if (preg_match('/^' . $releaseName . '/', $issueData['solved'][$releaseBranch]['inRelease'])) {
@@ -504,7 +504,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 					if (is_array($issueData['solved'][$releaseBranch]['reverted'])) {
 						$class .= ' info-reverted';
 						$revertedInfos = $issueData['solved'][$releaseBranch]['reverted'];
-						if ($revertedInfos['inRelease'] == 'next') {
+						if ($revertedInfos['inRelease'] === 'next') {
 							$versionName = 'for next release';
 							$versionTag = 'next';
 						} else if (preg_match('/^' . $releaseName . '/', $revertedInfos['inRelease'])) {
@@ -620,7 +620,7 @@ date_default_timezone_set('Europe/Berlin');
 $out .= sprintf('<p>Generated on %s. Based on check-changes.php by <a href="mailto:ernst@cron-it.de">Ernesto Baschny</a>, extended by <a href="mailto:karsten.dambekalns@typo3.org">Karsten Dambekalns</a> and <a href="mailto:mario.rimann@typo3.org">Mario Rimann</a></p>', strftime('%c', time()));
 
 // include JS stuff
-$out .= '<script src="jquery-1.7.2.min.js"></script>';
+$out .= '<script src="jquery-2.2.3.min.js"></script>';
 $out .= '<script src="jquery.cookie.js"></script>';
 $out .= '<script src="typo3-merged.js"></script>';
 
@@ -629,5 +629,3 @@ $out .= "</body></html>";
 $fh = fopen($htmlFile, 'w');
 fwrite($fh, $out);
 fclose($fh);
-
-?>
