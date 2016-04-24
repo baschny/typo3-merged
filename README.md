@@ -11,7 +11,6 @@ and which is still open.
 See it in action here:
 
 	http://tools.typo3.org/cms/merged/
-	http://bit.ly/flow3-merged-changes
 
 
 Initial setup
