@@ -11,15 +11,13 @@ and which is still open.
 See it in action here:
 
 	http://tools.typo3.org/cms/merged/
-	http://bit.ly/flow3-merged-changes
 
 
 Initial setup
 -------------
 
 The following steps will get you up and running to generate a list of changes
-in the TYPO3-Core. You can also set up this script to check other projects, see
-examples in the different configuration files (e.g. `typo3-extbase.php` )
+in the TYPO3-Core.
 
 	cd <path/to/your/target/directory>
 	git clone git://github.com/baschny/typo3-merged.git .
