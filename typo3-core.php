@@ -64,7 +64,11 @@ $projectsToCheck = array(
 				'66895' => 'Abandoned for 6.2, see comment in Gerrit #39463',
 				'67274' => 'Will not be backported to 6.2, see comment in Gerrit #40056',
 				'69368' => 'Patch is not relevant for 6.2 (found out after merging #42891)',
-				'71126' => 'Abandoned for 6.2, see comment in Gerrit #44232'
+				'71126' => 'Abandoned for 6.2, see comment in Gerrit #44232',
+			),
+			'master' => array(
+				'65224' => 'In master with #35997 and #36501, #37111 was only a backport of those to 6.2',
+				'66885' => 'Relevant only for 6.2',
 			)
 		),
 	),
