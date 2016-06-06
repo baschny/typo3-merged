@@ -65,6 +65,10 @@ $projectsToCheck = array(
 				'67274' => 'Will not be backported to 6.2, see comment in Gerrit #40056',
 				'69368' => 'Patch is not relevant for 6.2 (found out after merging #42891)',
 				'71126' => 'Abandoned for 6.2, see comment in Gerrit #44232',
+				'66844' => 'Will not be backported to 6.2, see comment in Gerrit #48441',
+			),
+			'TYPO3_7-6' => array(
+				'71094' => 'Merged in #47070 with a missing "Resolves" line',
 			),
 			'master' => array(
 				'65224' => 'In master with #35997 and #36501, #37111 was only a backport of those to 6.2',
