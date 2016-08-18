@@ -70,6 +70,7 @@ $projectsToCheck = array(
 			'TYPO3_7-6' => array(
 				'71094' => 'Merged in #47070 with a missing "Resolves" line',
 				'76376' => 'Not relevant for 7.6 (found out after merging #48404)',
+				'76642' => 'Not relevant for 7.6, see comment in Gerrit #48585',
 				'77248' => 'Already fixed with #49185',
 			),
 			'master' => array(
