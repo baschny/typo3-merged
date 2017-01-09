@@ -72,6 +72,8 @@ $projectsToCheck = array(
 				'76376' => 'Not relevant for 7.6 (found out after merging #48404)',
 				'76642' => 'Not relevant for 7.6, see comment in Gerrit #48585',
 				'77248' => 'Already fixed with #49185',
+				'78900' => 'Not relevant for 7.6, see comment in Gerrit #50931',
+				'79006' => 'Not relevant for 7.6, see comment in Gerrit #50977',
 			),
 			'master' => array(
 				'65224' => 'In master with #35997 and #36501, #37111 was only a backport of those to 6.2',
