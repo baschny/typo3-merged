@@ -428,7 +428,7 @@ foreach ($projectsToCheck as $project => $projectData) {
 		$issueLink = '';
 		$reviewLink = '';
 		if (preg_match('/^#(\d+)/', $issueNumber, $match)) {
-			$issueLink = sprintf('http://forge.typo3.org/issues/%s', $match[1]);
+			$issueLink = sprintf('https://forge.typo3.org/issues/%s', $match[1]);
 			$reviewLink = sprintf($reviewLinkPattern, $match[1]);
 		} elseif (preg_match('/^#M(\d+)/', $issueNumber, $match)) {
 			$issueLink = sprintf('http://bugs.typo3.org/view.php?id=%s', $match[1]);
