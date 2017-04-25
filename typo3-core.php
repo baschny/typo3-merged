@@ -37,6 +37,7 @@ $projectsToCheck = array(
 				'78900' => 'Not relevant for 7.6, see comment in Gerrit #50931',
 				'79006' => 'Not relevant for 7.6, see comment in Gerrit #50977',
 				'79406' => 'Not relevant for 7.6 (found out after merging #51379)',
+				'79705' => 'Feature not available on 7.6, see comment in Gerrit #51605',
 				'80014' => 'Not required for 7.6, see comment in Gerrit #51844',
 			),
 			'TYPO3_8-7' => array(
