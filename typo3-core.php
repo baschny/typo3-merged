@@ -8,20 +8,7 @@ $htmlFile = 'core.html';
 $reviewLinkPattern = 'https://review.typo3.org/#/q/tr:%s,n,z';
 
 $issueMapping = array(
-	'#M16726' => '#24324',
-	'#M17868' => '#25258',
-	'#M17924' => '#25305',
-	'#M18051' => '#25406',
-	'#M17916' => '#25301',
-	'#24440' => '#23355',
-	'#24410' => '#23355',
-	'#23496' => '#23355',
-	'#23860' => '#23355',
-	'#25006' => '#33853',
-	'#47782' => '#47211',
-	'#48027' => '#32387',
-	'#49461' => '#44983',
-	'#34838' => '#6893',
+#	'#34838' => '#6893',
 );
 
 $projectsToCheck = array(
@@ -31,9 +18,9 @@ $projectsToCheck = array(
 		'extractComponentNameFromPathByBranchCallback' => 'extractComponentNameFromPathByBranchCMS',
 		'releases' => array(
 			# project, starting point, branch, working copy path
-			array('6.2', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_6-2', 'TYPO3_6-2'),
-			array('7.6', 'refs/tags/TYPO3_4-5-0', 'origin/TYPO3_7-6', 'TYPO3_7-6'),
-			array('master', 'refs/tags/TYPO3_4-5-0', 'origin/master', 'master'),
+			array('7.6', 'refs/tags/TYPO3_7-6-0', 'origin/TYPO3_7-6', 'TYPO3_7-6'),
+			array('8.7', 'refs/tags/TYPO3_7-6-0', 'origin/TYPO3_8-7', 'TYPO3_8-7'),
+			array('master', 'refs/tags/TYPO3_7-6-0', 'origin/master', 'master'),
 		),
 		// list of issues to be ignored as TODOs from a certain branch.
 		// Used to shorten the list of issues that are marked "TODO"
@@ -42,31 +29,6 @@ $projectsToCheck = array(
 		// This is similar to an "ABANDONED"-state, but not for a
 		// changeset, but instead for a whole issue+branch combination.
 		'ignoreList' => array(
-			'TYPO3_6-2' => array(
-				'24556' => 'Abandoned for 6.2, see comment in Gerrit #44714',
-				'34728' => 'Reverted backport. Is already merged with #37167',
-				'35093' => 'Reverted backport. Is already merged with #37167',
-				'53928' => 'Abandoned for 6.2, see comment in Gerrit #41642',
-				'54410' => 'Will not be backported to 6.2, see comment in Gerrit #35750',
-				'54730' => 'Abandoned for 6.2, see comment in Gerrit',
-				'56426' => 'Was intended for master only.',
-				'57379' => 'Abandoned for 6.2, see comment in Gerrit #38515',
-				'59255' => 'Original patch was reverted.',
-				'59947' => 'Abandoned for 6.2, see comment in Gerrit',
-				'61812' => 'Abandoned for 6.2, see comment in Gerrit #44714',
-				'63275' => 'Will not be backported to 6.2, see comment in Gerrit',
-				'63648' => 'Abandoned for 6.2, see comment in Gerrit',
-				'64618' => 'Not relevant for 6.2 (found out after merging)',
-				'64883' => 'Abandoned for 6.2, see comment in Gerrit #36674',
-				'66312' => 'Abandoned for 6.2, see comment in Gerrit #44714',
-				'66167' => 'No backport possible, code not present in 6.2',
-				'66729' => 'No backport needed as the feature (Gerrit #30972) wasn\'t backported either.',
-				'66895' => 'Abandoned for 6.2, see comment in Gerrit #39463',
-				'67274' => 'Will not be backported to 6.2, see comment in Gerrit #40056',
-				'69368' => 'Patch is not relevant for 6.2 (found out after merging #42891)',
-				'71126' => 'Abandoned for 6.2, see comment in Gerrit #44232',
-				'66844' => 'Will not be backported to 6.2, see comment in Gerrit #48441',
-			),
 			'TYPO3_7-6' => array(
 				'71094' => 'Merged in #47070 with a missing "Resolves" line',
 				'76376' => 'Not relevant for 7.6 (found out after merging #48404)',
@@ -77,9 +39,9 @@ $projectsToCheck = array(
 				'79406' => 'Not relevant for 7.6 (found out after merging #51379)',
 				'80014' => 'Not required for 7.6, see comment in Gerrit #51844',
 			),
+			'TYPO3_8-7' => array(
+			),
 			'master' => array(
-				'65224' => 'In master with #35997 and #36501, #37111 was only a backport of those to 6.2',
-				'66885' => 'Relevant only for 6.2',
 			)
 		),
 	),
@@ -106,7 +68,7 @@ function getDetectedReleaseCommitCallback($commitInfos) {
  * @return string
  */
 function extractComponentNameFromPathByBranchCMS($release, $path) {
-	if (($release === '6.2' || $release === '7.6') && preg_match('#^typo3/sysext/(.*?)/#', $path, $matches)) {
+	if (($release === '7.6' || $release === '8.7') && preg_match('#^typo3/sysext/(.*?)/#', $path, $matches)) {
 		$component = $matches[1];
 		if ($component === 'extensionmanager') {
 			// Shortify
