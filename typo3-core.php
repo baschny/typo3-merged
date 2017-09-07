@@ -41,6 +41,7 @@ $projectsToCheck = array(
 				'79705' => 'Feature not available on 7.6, see comment in Gerrit #51605',
 				'79974' => 'Will not be backported, see comment in Gerrit #51808',
 				'80014' => 'Not relevant for 7.6, see comment in Gerrit #51844',
+				'82103' => 'Will not be backported, see comment in Gerrit #53707',
 				'82279' => 'Not relevant for 7.6, see comment in Gerrit #53873',
 			),
 			'TYPO3_8-7' => array(
