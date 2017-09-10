@@ -34,18 +34,26 @@ $projectsToCheck = array(
 				'76376' => 'Not relevant for 7.6 (found out after merging #48404)',
 				'76642' => 'Not relevant for 7.6, see comment in Gerrit #48585',
 				'77248' => 'Already fixed with #49185',
+				'77676' => 'Will not be backported, see comment in Gerrit #49628',
 				'78900' => 'Not relevant for 7.6, see comment in Gerrit #50931',
 				'79006' => 'Not relevant for 7.6, see comment in Gerrit #50977',
 				'79406' => 'Not relevant for 7.6 (found out after merging #51379)',
 				'79705' => 'Feature not available on 7.6, see comment in Gerrit #51605',
-				'80014' => 'Not required for 7.6, see comment in Gerrit #51844',
+				'79974' => 'Will not be backported, see comment in Gerrit #51808',
+				'80014' => 'Not relevant for 7.6, see comment in Gerrit #51844',
+				'82103' => 'Will not be backported, see comment in Gerrit #53707',
+				'82279' => 'Not relevant for 7.6, see comment in Gerrit #53873',
 			),
 			'TYPO3_8-7' => array(
+				'81097' => 'Merged in #52725 with a missing "Resolves" line',
+				'81200' => 'Abandoned for 8.7, see comment in Gerrit #53194',
+				'81654' => 'Feature will not be backported, see comment in Gerrit #53738',
+				'80763' => 'Not relevant for 8.7, see comment in Gerrit #50803',
 			),
 			'master' => array(
 			)
-		),
-	),
+		)
+	)
 );
 
 /**
