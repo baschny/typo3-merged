@@ -49,6 +49,7 @@ $projectsToCheck = array(
 				'81200' => 'Abandoned for 8.7, see comment in Gerrit #53194',
 				'81654' => 'Feature will not be backported, see comment in Gerrit #53738',
 				'80763' => 'Not relevant for 8.7, see comment in Gerrit #50803',
+				'82325' => 'Not relevant for 8.7, see comment in Gerrit #53940',
 			),
 			'master' => array(
 			)
