@@ -52,6 +52,7 @@ $projectsToCheck = array(
 			'TYPO3_8-7' => array(
 				'81097' => 'Merged in #52725 with a missing "Resolves" line',
 				'81200' => 'Abandoned for 8.7, see comment in Gerrit #53194',
+				'81416' => 'Will not be backported, see comment in Gerrit #53021',
 				'81466' => 'Abandoned for 8.7, see comment in Gerrit #55592',
 				'81741' => 'Abandoned for 8.7, see comment in Gerrit #55591',
 				'81743' => 'Abandoned for 8.7, see comment in Gerrit #55591',
@@ -65,6 +66,7 @@ $projectsToCheck = array(
 				'83239' => 'Fixed in Gerrit #54459 with a different approach',
 			),
 			'master' => array(
+				'82295' => 'Fixed in Gerrit #55000 with a different approach'
 			)
 		)
 	)
