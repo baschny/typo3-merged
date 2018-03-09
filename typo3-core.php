@@ -40,6 +40,7 @@ $projectsToCheck = array(
 				'79006' => 'Not relevant for 7.6, see comment in Gerrit #50977',
 				'79406' => 'Not relevant for 7.6 (found out after merging #51379)',
 				'79443' => 'Will not be backported, see comment in Gerrit #51406',
+				'79532' => 'Will not be backported, see comment in Gerrit #55812',
 				'79705' => 'Feature not available on 7.6, see comment in Gerrit #51605',
 				'79974' => 'Will not be backported, see comment in Gerrit #51808',
 				'80014' => 'Not relevant for 7.6, see comment in Gerrit #51844',
