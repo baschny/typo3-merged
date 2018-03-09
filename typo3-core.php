@@ -64,6 +64,8 @@ $projectsToCheck = array(
 				'82885' => 'Not relevant for 8.7, see comment in Gerrit #54510',
 				'83155' => 'Not relevant for 8.7, see comment in Gerrit #54850',
 				'83239' => 'Fixed in Gerrit #54459 with a different approach',
+				'83950' => 'Will not be backported, see comment in Gerrit #55781',
+				'84156' => 'Not relevant for 8.7, see comment in Gerrit #56029',
 			),
 			'master' => array(
 				'82295' => 'Fixed in Gerrit #55000 with a different approach'
