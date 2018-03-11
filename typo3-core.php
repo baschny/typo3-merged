@@ -40,9 +40,11 @@ $projectsToCheck = array(
 				'79006' => 'Not relevant for 7.6, see comment in Gerrit #50977',
 				'79406' => 'Not relevant for 7.6 (found out after merging #51379)',
 				'79443' => 'Will not be backported, see comment in Gerrit #51406',
+				'79532' => 'Will not be backported, see comment in Gerrit #55812',
 				'79705' => 'Feature not available on 7.6, see comment in Gerrit #51605',
 				'79974' => 'Will not be backported, see comment in Gerrit #51808',
 				'80014' => 'Not relevant for 7.6, see comment in Gerrit #51844',
+				'81146' => 'Will not be backported, see comment in Gerrit #53482',
 				'82103' => 'Will not be backported, see comment in Gerrit #53707',
 				'82279' => 'Not relevant for 7.6, see comment in Gerrit #53873',
 				'82460' => 'Not relevant for 7.6, see comment in Gerrit #54198',
@@ -52,6 +54,7 @@ $projectsToCheck = array(
 			'TYPO3_8-7' => array(
 				'81097' => 'Merged in #52725 with a missing "Resolves" line',
 				'81200' => 'Abandoned for 8.7, see comment in Gerrit #53194',
+				'81416' => 'Will not be backported, see comment in Gerrit #53021',
 				'81466' => 'Abandoned for 8.7, see comment in Gerrit #55592',
 				'81741' => 'Abandoned for 8.7, see comment in Gerrit #55591',
 				'81743' => 'Abandoned for 8.7, see comment in Gerrit #55591',
@@ -63,8 +66,11 @@ $projectsToCheck = array(
 				'82885' => 'Not relevant for 8.7, see comment in Gerrit #54510',
 				'83155' => 'Not relevant for 8.7, see comment in Gerrit #54850',
 				'83239' => 'Fixed in Gerrit #54459 with a different approach',
+				'83950' => 'Will not be backported, see comment in Gerrit #55781',
+				'84156' => 'Not relevant for 8.7, see comment in Gerrit #56029',
 			),
 			'master' => array(
+				'82295' => 'Fixed in Gerrit #55000 with a different approach'
 			)
 		)
 	)
