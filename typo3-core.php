@@ -50,6 +50,7 @@ $projectsToCheck = array(
 				'82460' => 'Not relevant for 7.6, see comment in Gerrit #54198',
 				'83070' => 'Not relevant for 7.6, see comment in Gerrit #55018',
 				'83950' => 'Will not be backported, see comment in Gerrit #55781',
+				'84215' => 'Will not be backported, see comment in Gerrit #56121',
 			),
 			'TYPO3_8-7' => array(
 				'81097' => 'Merged in #52725 with a missing "Resolves" line',
@@ -67,6 +68,7 @@ $projectsToCheck = array(
 				'83155' => 'Not relevant for 8.7, see comment in Gerrit #54850',
 				'83239' => 'Fixed in Gerrit #54459 with a different approach',
 				'83950' => 'Will not be backported, see comment in Gerrit #55781',
+				'84018' => 'Will not be backported, see comment in Gerrit #56114',
 				'84156' => 'Not relevant for 8.7, see comment in Gerrit #56029',
 			),
 			'master' => array(
